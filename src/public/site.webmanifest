@@ -1,0 +1,16 @@
+{
+  "name": "Jean Docs",
+  "short_name": "Jean Docs",
+  "start_url": "/docs/",
+  "scope": "/docs/",
+  "display": "standalone",
+  "background_color": "#071412",
+  "theme_color": "#0f766e",
+  "icons": [
+    {
+      "src": "/docs/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

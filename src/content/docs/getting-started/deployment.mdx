@@ -1,0 +1,34 @@
+---
+title: Deployment
+description: Build the static Jean docs site and serve it behind nginx.
+icon: Rocket
+---
+
+## Build the static site
+
+```bash
+cd src
+bun run build
+```
+
+The generated site is written to `src/.output/public`.
+
+## Environment variables
+
+Set these before building for production:
+
+```bash
+VITE_SITE_URL=https://your-domain.example
+VITE_PLAUSIBLE_SCRIPT_URL=https://plausible.your-domain.example/js/script.js
+VITE_PLAUSIBLE_DOMAIN=your-domain.example
+# Optional: only set this if events should go to a different host or base path
+# VITE_PLAUSIBLE_API_HOST=https://plausible.your-domain.example
+```
+
+## Deployment output
+
+- Docs pages are emitted under `/docs`
+- Search is served from `/docs/api/search`
+- Sitemap is emitted at `/docs/sitemap.xml`
+- Robots is emitted at `/robots.txt` and `/docs/robots.txt`
+- Open Graph images are emitted under `/docs/og`

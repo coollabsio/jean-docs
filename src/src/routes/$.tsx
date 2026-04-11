@@ -1,0 +1,143 @@
+import { createServerFn } from '@tanstack/react-start';
+import { createFileRoute, notFound } from '@tanstack/react-router';
+import browserCollections from 'collections/browser';
+import { useFumadocsLoader } from 'fumadocs-core/source/client';
+import { Suspense } from 'react';
+import { DocsLayout } from 'fumadocs-ui/layouts/docs';
+import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
+import { useMDXComponents } from '@/components/mdx';
+import { type DocsManifest, getManifestKey, type LoaderData } from '@/lib/docs-manifest';
+import { baseOptions } from '@/lib/layout.shared';
+import { absoluteUrl, getDocOgPath, site } from '@/lib/site';
+import { source } from '@/lib/source';
+
+export const Route = createFileRoute('/$')({
+  component: Page,
+  loader: async ({ params }) => {
+    const slugs = params._splat?.split('/').filter(Boolean) ?? [];
+    const data = await loadPageData(slugs);
+    await clientLoader.preload(data.path);
+    return data;
+  },
+  head: ({ loaderData }) => {
+    const data = loaderData as LoaderData | undefined;
+    if (!data) {
+      return {};
+    }
+
+    const title = data.isIndex ? site.title : `${data.title} | ${site.title}`;
+    const description = data.description || site.description;
+    const canonicalUrl = absoluteUrl(data.url.endsWith('/') ? data.url : `${data.url}`);
+    const ogImageUrl = absoluteUrl(data.ogImagePath);
+    const structuredData = {
+      '@context': 'https://schema.org',
+      '@type': data.isIndex ? 'WebPage' : 'TechArticle',
+      headline: data.title,
+      description,
+      url: canonicalUrl,
+      image: ogImageUrl,
+      inLanguage: site.locale,
+      publisher: {
+        '@type': 'Organization',
+        name: site.name,
+      },
+    };
+
+    return {
+      meta: [
+        { title },
+        { name: 'description', content: description },
+        { property: 'og:title', content: title },
+        { property: 'og:description', content: description },
+        { property: 'og:url', content: canonicalUrl },
+        { property: 'og:image', content: ogImageUrl },
+        { property: 'og:type', content: data.isIndex ? 'website' : 'article' },
+        { name: 'twitter:title', content: title },
+        { name: 'twitter:description', content: description },
+        { name: 'twitter:image', content: ogImageUrl },
+      ],
+      links: [{ rel: 'canonical', href: canonicalUrl }],
+      scripts: [
+        {
+          type: 'application/ld+json',
+          children: JSON.stringify(structuredData),
+        },
+      ],
+    };
+  },
+});
+
+const serverLoader = createServerFn({
+  method: 'GET',
+})
+  .inputValidator((slugs: string[]) => slugs)
+  .handler(async ({ data: slugs }) => {
+    const page = source.getPage(slugs);
+    if (!page) throw notFound();
+
+    return {
+      description: page.data.description ?? site.description,
+      isIndex: page.slugs.length === 0,
+      ogImagePath: getDocOgPath(page.slugs),
+      pageTree: await source.serializePageTree(source.getPageTree()),
+      path: page.path,
+      title: page.data.title,
+      url: page.url,
+    } satisfies LoaderData;
+  });
+
+let docsManifestPromise: Promise<DocsManifest> | undefined;
+
+async function loadDocsManifest() {
+  docsManifestPromise ??= fetch(`${site.docsBasePath}/docs-manifest.json`, {
+    method: 'GET',
+  }).then(async (response) => {
+    if (!response.ok) {
+      throw new Error(`Failed to load docs manifest: ${response.status} ${response.statusText}`);
+    }
+
+    return (await response.json()) as DocsManifest;
+  });
+
+  return docsManifestPromise;
+}
+
+async function loadPageData(slugs: string[]) {
+  if (import.meta.env.PROD && typeof document !== 'undefined') {
+    const manifest = await loadDocsManifest();
+    const page = manifest.pages[getManifestKey(slugs)];
+
+    if (!page) throw notFound();
+
+    return {
+      ...page,
+      pageTree: manifest.pageTree,
+    } satisfies LoaderData;
+  }
+
+  return serverLoader({ data: slugs });
+}
+
+const clientLoader = browserCollections.docs.createClientLoader({
+  component({ toc, frontmatter, default: MDX }) {
+    return (
+      <DocsPage toc={toc}>
+        <DocsTitle>{frontmatter.title}</DocsTitle>
+        <DocsDescription>{frontmatter.description}</DocsDescription>
+        <DocsBody>
+          <MDX components={useMDXComponents()} />
+        </DocsBody>
+      </DocsPage>
+    );
+  },
+});
+
+function Page() {
+  const data = useFumadocsLoader(Route.useLoaderData());
+
+  return (
+    <DocsLayout {...baseOptions()} tree={data.pageTree}>
+      <Suspense>{clientLoader.useContent(data.path)}</Suspense>
+    </DocsLayout>
+  );
+}

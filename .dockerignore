@@ -1,0 +1,7 @@
+.git
+.DS_Store
+fumadocs-core
+src/node_modules
+src/.source
+src/.tanstack
+src/*.log

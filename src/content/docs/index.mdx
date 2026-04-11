@@ -1,0 +1,199 @@
+---
+title: Overview
+description: Everything you need to run and ship Jean documentation under the /docs path.
+icon: BookOpenText
+---
+
+Welcome to the Jean docs workspace.
+
+This starter is already wired for static export, local search, build-time OG images, sitemap and robots generation, Plausible analytics, and nginx deployment.
+
+<Callout title="Good to know">
+All of the examples below work on this site without importing components at the top of each MDX page.
+</Callout>
+
+## Quick links
+
+<Cards>
+  <Card title="Install locally" href="/docs/getting-started/installation">
+    Run the docs with Bun and TanStack Start.
+  </Card>
+  <Card title="Deploy it" href="/docs/getting-started/deployment">
+    Build once and serve the static output with nginx.
+  </Card>
+  <Card title="Edit content" href="/docs/getting-started/installation">
+    Add pages under `src/content/docs`.
+  </Card>
+</Cards>
+
+## Component examples
+
+### Cards
+
+<Cards>
+  <Card title="Primary action" href="/docs/getting-started/installation">
+    Use cards for grouped navigation or featured links.
+  </Card>
+  <Card title="Deployment notes" href="/docs/getting-started/deployment">
+    Cards can hold a short description under the title.
+  </Card>
+</Cards>
+
+```mdx
+<Cards>
+  <Card title="Primary action" href="/docs/getting-started/installation">
+    Use cards for grouped navigation or featured links.
+  </Card>
+  <Card title="Deployment notes" href="/docs/getting-started/deployment">
+    Cards can hold a short description under the title.
+  </Card>
+</Cards>
+```
+
+### Callout
+
+<Callout type="warn" title="Heads up">
+Use callouts for warnings, notes, migration details, and quick guidance.
+</Callout>
+
+```mdx
+<Callout type="warn" title="Heads up">
+Use callouts for warnings, notes, migration details, and quick guidance.
+</Callout>
+```
+
+### Tabs
+
+<Tabs items={["Bun", "Docker"]}>
+  <Tab value="Bun">
+
+```bash
+cd src
+bun install
+bun run dev
+```
+
+  </Tab>
+  <Tab value="Docker">
+
+```bash
+cd src
+bun run build
+cd ..
+docker build -t jean-docs .
+docker run -p 8080:80 jean-docs
+```
+
+  </Tab>
+</Tabs>
+
+```mdx
+<Tabs items={["Bun", "Docker"]}>
+  <Tab value="Bun">
+    Bun instructions
+  </Tab>
+  <Tab value="Docker">
+    Docker instructions
+  </Tab>
+</Tabs>
+```
+
+### Files
+
+<Files>
+  <Folder name="src" defaultOpen>
+    <Folder name="content/docs" defaultOpen>
+      <File name="index.mdx" />
+      <File name="getting-started/installation.mdx" />
+    </Folder>
+    <Folder name="src" defaultOpen>
+      <File name="routes/$.tsx" />
+      <File name="components/mdx.tsx" />
+    </Folder>
+  </Folder>
+  <File name="Dockerfile" />
+  <File name="nginx.conf" />
+</Files>
+
+```mdx
+<Files>
+  <Folder name="src" defaultOpen>
+    <Folder name="content/docs" defaultOpen>
+      <File name="index.mdx" />
+    </Folder>
+  </Folder>
+  <File name="Dockerfile" />
+</Files>
+```
+
+### Steps
+
+<Steps>
+  <Step>
+
+#### Create the page
+
+Add a new `.mdx` file inside `src/content/docs`.
+
+  </Step>
+  <Step>
+
+#### Write the content
+
+Use markdown, code blocks, and the built-in MDX components.
+
+  </Step>
+  <Step>
+
+#### Preview it
+
+Run `bun run dev` in `src` and open `/docs`.
+
+  </Step>
+</Steps>
+
+```mdx
+<Steps>
+  <Step>
+
+#### Create the page
+
+Add a new `.mdx` file.
+
+  </Step>
+  <Step>
+
+#### Preview it
+
+Run the dev server.
+
+  </Step>
+</Steps>
+```
+
+### Zoomable images
+
+Markdown images are zoomable automatically:
+
+![Jean mark](./jean-mark.svg)
+
+You can also use the component directly when you want to pass explicit props:
+
+<ZoomImage src="/docs/jean-mark.svg" alt="Jean mark" width={160} height={160} />
+
+```mdx
+![Jean mark](./jean-mark.svg)
+
+<ZoomImage src="/docs/jean-mark.svg" alt="Jean mark" width={160} height={160} />
+```
+
+## Authoring notes
+
+- Markdown images are zoomable by default.
+- Fumadocs UI components are available in MDX without page-level imports.
+- Search uses the local static index generated from your content.
+- The deployable static output ends up in `src/.output/public`.
+
+## Next steps
+
+Start replacing this content with your product documentation under `src/content/docs`.
