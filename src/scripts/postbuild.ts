@@ -6,7 +6,7 @@ import { lucideIconsPlugin } from 'fumadocs-core/source/lucide-icons';
 import { getDocEntries, getDocSourceFiles } from './lib/content';
 import { getManifestKey } from '../src/lib/docs-manifest';
 import { absoluteUrl, site } from './lib/site';
-import { getDocOgPath } from '../src/lib/site';
+import { getDocMarkdownPath, getDocOgPath } from '../src/lib/site';
 
 function escapeXml(value: string): string {
   return value
@@ -191,6 +191,7 @@ async function writeDocsManifest() {
       {
         description: page.data.description ?? site.description,
         isIndex: page.slugs.length === 0,
+        markdownUrl: getDocMarkdownPath(page.slugs),
         ogImagePath: getDocOgPath(page.slugs),
         path: page.path,
         title: page.data.title,

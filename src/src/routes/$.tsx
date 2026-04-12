@@ -4,12 +4,19 @@ import browserCollections from 'collections/browser';
 import { useFumadocsLoader } from 'fumadocs-core/source/client';
 import { Suspense } from 'react';
 import { DocsLayout } from 'fumadocs-ui/layouts/docs';
-import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
+import {
+  DocsBody,
+  DocsDescription,
+  DocsPage,
+  DocsTitle,
+  MarkdownCopyButton,
+} from 'fumadocs-ui/layouts/docs/page';
 import { useMDXComponents } from '@/components/mdx';
+import { JeanViewOptionsPopover } from '@/components/page-actions';
 import { type DocsManifest, getManifestKey, type LoaderData } from '@/lib/docs-manifest';
 import { baseOptions } from '@/lib/layout.shared';
-import { absoluteUrl, getDocOgPath, site } from '@/lib/site';
-import { source } from '@/lib/source';
+import { absoluteUrl, getDocGithubPath, getDocOgPath, site } from '@/lib/site';
+import { getPageMarkdownUrl, source } from '@/lib/source';
 
 function toPublicDocUrl(url: string): string {
   if (url === '/') return site.docsBasePath;
@@ -86,6 +93,7 @@ const serverLoader = createServerFn({
     return {
       description: page.data.description ?? site.description,
       isIndex: page.slugs.length === 0,
+      markdownUrl: getPageMarkdownUrl(page).url,
       ogImagePath: getDocOgPath(page.slugs),
       pageTree: await source.serializePageTree(source.getPageTree()),
       path: page.path,
@@ -127,11 +135,18 @@ async function loadPageData(slugs: string[]) {
 }
 
 const clientLoader = browserCollections.docs.createClientLoader({
-  component({ toc, frontmatter, default: MDX }) {
+  component(
+    { toc, frontmatter, default: MDX },
+    { markdownUrl, path }: { markdownUrl: string; path: string },
+  ) {
     return (
       <DocsPage toc={toc}>
         <DocsTitle>{frontmatter.title}</DocsTitle>
         <DocsDescription>{frontmatter.description}</DocsDescription>
+        <div className="flex flex-row items-center gap-2 border-b -mt-4 pb-6">
+          <MarkdownCopyButton markdownUrl={markdownUrl} />
+          <JeanViewOptionsPopover markdownUrl={markdownUrl} githubUrl={getDocGithubPath(path)} />
+        </div>
         <DocsBody>
           <MDX components={useMDXComponents()} />
         </DocsBody>
@@ -145,7 +160,7 @@ function Page() {
 
   return (
     <DocsLayout {...baseOptions()} tree={data.pageTree}>
-      <Suspense>{clientLoader.useContent(data.path)}</Suspense>
+      <Suspense>{clientLoader.useContent(data.path, { markdownUrl: data.markdownUrl, path: data.path })}</Suspense>
     </DocsLayout>
   );
 }

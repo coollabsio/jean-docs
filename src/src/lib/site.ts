@@ -58,3 +58,12 @@ export function getDocOgPath(slugs: string[]): string {
   if (slugs.length === 0) return `${site.docsBasePath}/og/index.png`;
   return `${site.docsBasePath}/og/${slugs.join('/')}.png`;
 }
+
+export function getDocMarkdownPath(slugs: string[]): string {
+  const segments = [...slugs, 'content.md'];
+  return `${site.docsBasePath}/llms.mdx/docs/${segments.join('/')}`;
+}
+
+export function getDocGithubPath(path: string): string {
+  return `https://github.com/coollabsio/jean-docs/blob/main/src/content/docs/${path}`;
+}

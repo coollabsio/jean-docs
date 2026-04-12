@@ -14,6 +14,9 @@ const prerenderDocPages = docEntries.map((doc) => ({
       ? siteDefinition.docsBasePath
       : `${siteDefinition.docsBasePath}/${doc.routeSegments.join('/')}`,
 }));
+const prerenderMarkdownPages = docEntries.map((doc) => ({
+  path: `${siteDefinition.docsBasePath}/llms.mdx/docs/${[...doc.routeSegments, 'content.md'].join('/')}`,
+}));
 
 export default defineConfig({
   base: '/docs/',
@@ -33,6 +36,7 @@ export default defineConfig({
       },
       pages: [
         ...prerenderDocPages,
+        ...prerenderMarkdownPages,
         {
           path: `${siteDefinition.docsBasePath}/api/search`,
         },

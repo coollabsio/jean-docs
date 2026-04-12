@@ -3,6 +3,7 @@ import type { SerializedPageTree } from 'fumadocs-core/source/client';
 export type LoaderData = {
   description: string;
   isIndex: boolean;
+  markdownUrl: string;
   ogImagePath: string;
   pageTree: SerializedPageTree;
   path: string;
