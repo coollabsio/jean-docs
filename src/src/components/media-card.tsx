@@ -1,7 +1,7 @@
 'use client';
 
 import { ImageZoom } from 'fumadocs-ui/components/image-zoom';
-import { useMemo, useState, type ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { publicAssetFallbackPath, publicAssetPath } from '@/lib/site';
 
 interface MediaCardProps {
@@ -25,8 +25,7 @@ export function MediaCard({
   imageSrc,
   imageAlt = description,
 }: MediaCardProps) {
-  const [resolvedSrc, setResolvedSrc] = useState(imageSrc);
-  const fallbackSrc = useMemo(() => getFallbackImageSrc(imageSrc), [imageSrc]);
+  const resolvedSrc = getFallbackImageSrc(imageSrc) ?? imageSrc;
 
   return (
     <div
@@ -38,11 +37,6 @@ export function MediaCard({
           src={resolvedSrc}
           alt={imageAlt}
           className="m-0 block h-auto w-full cursor-zoom-in object-cover"
-          onError={() => {
-            if (fallbackSrc && fallbackSrc !== resolvedSrc) {
-              setResolvedSrc(fallbackSrc);
-            }
-          }}
         />
       </ImageZoom>
       <p className="m-0 px-4 py-3 text-sm leading-6 text-fd-muted-foreground">{description}</p>

@@ -2,6 +2,7 @@ import { cp, mkdir, rm, writeFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { Resvg } from '@resvg/resvg-js';
 import { loader, source as createSource } from 'fumadocs-core/source';
+import { lucideIconsPlugin } from 'fumadocs-core/source/lucide-icons';
 import { getDocEntries, getDocSourceFiles } from './lib/content';
 import { getManifestKey } from '../src/lib/docs-manifest';
 import { absoluteUrl, site } from './lib/site';
@@ -91,15 +92,15 @@ Sitemap: ${absoluteUrl(`${site.docsBasePath}/sitemap.xml`)}
 
 async function writeDocsManifest() {
   const outputRoot = resolve(import.meta.dir, '../.output/public');
-  const docSourceFiles = await getDocSourceFiles();
-  const docSource = createSource(docSourceFiles);
-  const docLoader = loader({
-    source: docSource,
+  const { metas, pages: sourcePages } = await getDocSourceFiles();
+  const docsSource = loader({
+    source: createSource({ metas, pages: sourcePages }),
     baseUrl: '/',
+    plugins: [lucideIconsPlugin()],
   });
-  const pageTree = await docLoader.serializePageTree(docLoader.getPageTree());
+  const pageTree = await docsSource.serializePageTree(docsSource.getPageTree());
   const pages = Object.fromEntries(
-    docLoader.getPages().map((page) => [
+    docsSource.getPages().map((page) => [
       getManifestKey(page.slugs),
       {
         description: page.data.description ?? site.description,

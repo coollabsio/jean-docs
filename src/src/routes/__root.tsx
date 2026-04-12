@@ -3,7 +3,7 @@ import { RootProvider } from 'fumadocs-ui/provider/tanstack';
 import * as React from 'react';
 import SearchDialog from '@/components/search';
 import { absoluteUrl, publicAssetFallbackPath, site } from '@/lib/site';
-import appCss from '@/styles/app.css?url';
+import '@/styles/app.css';
 
 export const Route = createRootRoute({
   head: () => ({
@@ -68,7 +68,6 @@ export const Route = createRootRoute({
       },
     ],
     links: [
-      { rel: 'stylesheet', href: appCss },
       { rel: 'icon', href: publicAssetFallbackPath('/brand/favicon.ico'), type: 'image/x-icon', sizes: 'any' },
       { rel: 'shortcut icon', href: publicAssetFallbackPath('/brand/favicon.ico') },
       { rel: 'manifest', href: publicAssetFallbackPath('/site.webmanifest') },

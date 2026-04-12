@@ -26,7 +26,7 @@ COPY src ./src
 
 RUN --mount=type=cache,target=/root/.bun \
     --mount=type=cache,target=/root/.cache/bun \
-    cd src && bun run build
+    cd src && rm -rf .output .tanstack && bun run build
 
 FROM nginxinc/nginx-unprivileged:1.29.3-alpine-slim AS final
 
