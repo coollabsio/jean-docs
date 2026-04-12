@@ -1,0 +1,78 @@
+---
+title: Local-First and Security
+description: What Jean stores, what stays local, and how web access is secured.
+icon: ShieldCheck
+---
+
+Jean is opinionated about keeping the working state close to your machine.
+
+That does not mean nothing ever leaves the computer. Your chosen backend still talks to its own upstream service when you use it. What Jean changes is where the control layer lives and how much of your workflow stays under your own control.
+
+## Local-first by default
+
+Jean keeps its core state on the machine running the app:
+- projects and worktrees
+- chat sessions and archived sessions
+- preferences and keybindings
+- saved context summaries and recovery data
+- local automation such as `jean.json`
+
+Jean also works with the CLI authentication you already set up instead of inventing a separate hosted account model for day-to-day use.
+
+## What Jean stores
+
+The app persists information such as:
+- project metadata
+- worktree metadata
+- chat messages and session state
+- prompt, model, backend, and provider choices
+- archive status, labels, and session recaps
+- preferences like fonts, themes, shortcuts, and web access settings
+
+It also writes `jean.json` into your repository root when you save project automation there.
+
+## Credentials and providers
+
+Jean can work with:
+- direct Claude CLI authentication
+- Codex CLI authentication
+- OpenCode authentication
+- GitHub CLI authentication
+- optional custom Claude CLI provider profiles
+
+Provider profiles are stored as Claude CLI settings profiles, which lets Jean route Claude CLI through alternate endpoints without turning Jean itself into the credential system.
+
+## Safe defaults
+
+A few defaults lean conservative:
+- the built-in HTTP server is off by default
+- when enabled, it defaults to localhost-only behavior unless you open the bind host
+- token-based access is required by default for web access
+- new MCP server discovery respects servers you explicitly disabled
+
+<Callout type="warn" title="About web access">
+If you bind Jean to `0.0.0.0` or another non-loopback host, treat it like any other developer tool exposed on your network. Keep token protection on and put a real access policy in front of it if the network is shared.
+</Callout>
+
+## What the browser mode does
+
+Jean's web access mode serves the frontend over an embedded HTTP server and keeps state in sync over WebSocket.
+
+That is useful for:
+- running Jean headless on another machine
+- opening the same workspace from a browser
+- checking on long-running work without staying in the desktop app
+
+## Recovery and cleanup
+
+Jean also has recovery-oriented behavior for local state:
+- archived items can be restored
+- orphaned session data can be cleaned up
+- crash or emergency data can be recovered
+- update checks and installation are handled through the desktop app
+
+## Next reads
+
+- [Web access and headless](/manage/web-access-and-headless)
+- [Archive, recovery, and updates](/manage/archive-recovery-and-updates)
+- [Backends, models, and MCP](/core-concepts/backends-models-and-mcp)

@@ -41,6 +41,19 @@ export function absoluteUrl(pathname: string): string {
   return new URL(pathname, `${site.siteUrl}/`).toString();
 }
 
+function normalizeAssetPath(pathname: string): string {
+  return pathname.startsWith('/') ? pathname : `/${pathname}`;
+}
+
+export function publicAssetFallbackPath(pathname: string): string {
+  const normalized = normalizeAssetPath(pathname);
+  return normalized.startsWith(site.docsBasePath) ? normalized : `${site.docsBasePath}${normalized}`;
+}
+
+export function publicAssetPath(pathname: string): string {
+  return publicAssetFallbackPath(pathname);
+}
+
 export function getDocOgPath(slugs: string[]): string {
   if (slugs.length === 0) return `${site.docsBasePath}/og/index.png`;
   return `${site.docsBasePath}/og/${slugs.join('/')}.png`;

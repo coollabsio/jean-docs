@@ -1,0 +1,83 @@
+---
+title: Backends, Models, and MCP
+description: How Jean chooses a backend, routes model settings, and brings extra tools into a session.
+icon: PlugZap
+---
+
+Jean is not locked to a single agent backend.
+
+You can work with Claude CLI, Codex CLI, and OpenCode, then choose how much of that configuration is global, project-level, or session-specific.
+
+## Backends
+
+Jean supports three backends:
+- **Claude CLI**
+- **Codex CLI**
+- **OpenCode**
+
+You can set a global default backend and override it per project or per session.
+
+## Models and reasoning
+
+Model selection is session-aware.
+
+Depending on the backend, Jean can also store and apply:
+- thinking level
+- reasoning effort
+- execution mode
+
+That lets you keep a lighter model for quick work and a heavier one for review, investigation, or tricky implementation.
+
+## Providers
+
+Jean supports custom Claude CLI provider profiles.
+
+This is useful when you want Claude CLI to use a different endpoint or routing setup while keeping the rest of the Jean workflow unchanged.
+
+The important distinction:
+- **backend** chooses the tool family
+- **model** chooses the model within that backend
+- **provider** changes how Claude CLI is routed
+
+## MCP servers
+
+Jean discovers MCP servers from the backends you have installed.
+
+It reads backend-specific config locations such as:
+- Claude config plus `.mcp.json`
+- Codex config plus `.codex/config.toml`
+- OpenCode config plus `opencode.json`
+
+You can enable MCP servers:
+- globally
+- per project
+- per session
+
+Newly discovered servers can be auto-enabled, but Jean keeps track of servers you explicitly turned off so they do not silently reappear.
+
+## Attachments and extra context
+
+Beyond MCP, a session can include:
+- file mentions
+- attached text files
+- attached images
+- loaded GitHub context
+- loaded Linear context
+- saved context snapshots
+- linked project context
+
+Jean treats these as part of the session state rather than a one-off paste.
+
+## Good defaults
+
+For most teams, a good starting setup is:
+- one default backend you trust
+- project-level overrides only where they are truly useful
+- MCP enabled only for tools that add clear value
+- heavy models for investigation, lighter models for short generation tasks
+
+## Next reads
+
+- [Start your first session](/getting-started/start-your-first-session)
+- [Magic commands](/workflows/magic-commands)
+- [Preferences and customization](/manage/preferences-and-customization)

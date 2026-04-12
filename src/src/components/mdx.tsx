@@ -5,6 +5,8 @@ import { File, Files, Folder } from 'fumadocs-ui/components/files';
 import { Step, Steps } from 'fumadocs-ui/components/steps';
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 import type { MDXComponents } from 'mdx/types';
+import { MediaCard, MediaCardGroup } from './media-card';
+import { ScreenshotTab, ScreenshotTabs } from './screenshot-tabs';
 import { ZoomImage } from './zoom-image';
 
 export function getMDXComponents(components?: MDXComponents) {
@@ -16,6 +18,10 @@ export function getMDXComponents(components?: MDXComponents) {
     File,
     Files,
     Folder,
+    MediaCard,
+    MediaCardGroup,
+    ScreenshotTab,
+    ScreenshotTabs,
     Step,
     Steps,
     Tab,

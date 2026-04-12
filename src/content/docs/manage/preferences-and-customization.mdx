@@ -1,0 +1,82 @@
+---
+title: Settings and Customization
+description: Tune Jean's defaults for backends, prompts, appearance, keybindings, integrations, and experimental features.
+icon: Cog
+---
+
+Jean ships with strong defaults, but it is meant to be shaped around how you work.
+
+The Preferences dialog is where that happens.
+
+## General
+
+The General pane covers the core app behavior, including:
+- CLI installation and authentication status
+- default backend and model choices
+- terminal and editor defaults
+- git polling behavior
+- archive retention and removal behavior
+- onboarding helpers and cleanup actions
+
+This is the best place to set the "every new project should feel like this" baseline.
+
+## Appearance and keybindings
+
+You can adjust:
+- theme mode
+- UI and chat fonts
+- syntax themes
+- keyboard shortcuts
+
+Keybindings are user-configurable, so the defaults are only a starting point.
+
+## Providers
+
+The Providers pane manages custom Claude CLI profiles.
+
+Use this when you need Claude CLI to route through another endpoint or environment while keeping Jean's session workflow unchanged.
+
+## Usage
+
+The Usage pane currently focuses on Codex usage information, including:
+- plan type
+- credits remaining when available
+- session and weekly usage windows
+- extra model limits when exposed by the CLI
+
+## Magic prompts
+
+Jean lets you customize the prompt templates behind built-in workflows such as:
+- issue investigation
+- PR investigation
+- code review
+- commit message generation
+- release notes
+- conflict resolution
+- session naming
+- recaps
+
+You can also set model, provider, backend, and reasoning defaults per workflow.
+
+## MCP servers and integrations
+
+Two other panes matter a lot for power users:
+- **MCP Servers** for tool discovery and enablement
+- **Integrations** for services like Linear
+
+These decide how much extra context and tooling a session can see.
+
+## Experimental features
+
+Jean keeps some features behind an Experimental pane, including:
+- parallel execution prompting
+- automatic session recap
+- debug mode
+
+These are useful, but they are intentionally labeled as less stable than the core workflow.
+
+## Next reads
+
+- [Backends, models, and MCP](/core-concepts/backends-models-and-mcp)
+- [Magic commands](/workflows/magic-commands)
+- [Web access and headless](/manage/web-access-and-headless)

@@ -1,199 +1,92 @@
 ---
-title: Overview
-description: Everything you need to run and ship Jean documentation under the /docs path.
-icon: BookOpenText
+title: Home
+description: Learn how Jean organizes projects, worktrees, chat sessions, and AI tooling around real development work.
+icon: House
 ---
 
-Welcome to the Jean docs workspace.
+import {
+  ArchiveRestore,
+  Bot,
+  Cog,
+  Download,
+  FolderOpen,
+  FolderTree,
+  GitPullRequest,
+  Globe,
+  MessageSquareText,
+  PanelsTopLeft,
+  ShieldCheck,
+  PlugZap,
+  WandSparkles,
+  SplinePointer,
+} from 'lucide-react';
 
-This starter is already wired for static export, local search, build-time OG images, sitemap and robots generation, Plausible analytics, and nginx deployment.
+Jean is a local-first desktop workspace for Claude CLI, Codex CLI, and OpenCode.
 
-<Callout title="Good to know">
-All of the examples below work on this site without importing components at the top of each MDX page.
+It gives you one place to manage repositories, spin up worktrees, talk to coding agents, inspect diffs, open terminals, and move work toward a branch or pull request.
+
+<Callout title="How Jean fits">
+Jean does not replace your git workflow or your AI provider account. It sits on top of the tools you already use and turns them into a tighter day-to-day workspace.
 </Callout>
 
-## Quick links
+## Get started
 
 <Cards>
-  <Card title="Install locally" href="/docs/getting-started/installation">
-    Run the docs with Bun and TanStack Start.
+  <Card title="Install and set up" href="/getting-started/installation" icon={<Download />}>
+    Install Jean, connect your CLIs, and finish the first-run setup.
   </Card>
-  <Card title="Deploy it" href="/docs/getting-started/deployment">
-    Build once and serve the static output with nginx.
+  <Card title="Add your first project" href="/getting-started/add-your-first-project" icon={<FolderOpen />}>
+    Bring in a repository, organize it in folders, and add a `jean.json`.
   </Card>
-  <Card title="Edit content" href="/docs/getting-started/installation">
-    Add pages under `src/content/docs`.
+  <Card title="Start your first session" href="/getting-started/start-your-first-session" icon={<MessageSquareText />}>
+    Choose a base session or worktree, then send the first message.
   </Card>
 </Cards>
 
-## Component examples
-
-### Cards
+## Understand the model
 
 <Cards>
-  <Card title="Primary action" href="/docs/getting-started/installation">
-    Use cards for grouped navigation or featured links.
+  <Card title="What Jean is" href="/about/what-is-jean" icon={<Bot />}>
+    See where Jean sits between your editor, git workflow, and AI backends.
   </Card>
-  <Card title="Deployment notes" href="/docs/getting-started/deployment">
-    Cards can hold a short description under the title.
+  <Card title="How Jean works" href="/about/how-jean-works" icon={<SplinePointer />}>
+    Learn the project, worktree, session, and canvas model.
+  </Card>
+  <Card title="Local-first and security" href="/about/local-first-and-security" icon={<ShieldCheck />}>
+    Understand what stays local, what Jean stores, and how web access is protected.
   </Card>
 </Cards>
 
-```mdx
+## Move through real work
+
 <Cards>
-  <Card title="Primary action" href="/docs/getting-started/installation">
-    Use cards for grouped navigation or featured links.
+  <Card title="Projects, Worktrees, Sessions" href="/core-concepts/projects-worktrees-and-sessions" icon={<FolderTree />}>
+    Build the right mental model before your workspace gets busy.
   </Card>
-  <Card title="Deployment notes" href="/docs/getting-started/deployment">
-    Cards can hold a short description under the title.
+  <Card title="Backends, models, and MCP" href="/core-concepts/backends-models-and-mcp" icon={<PlugZap />}>
+    Pick the right backend and decide how much context to attach.
+  </Card>
+  <Card title="Project canvas and chat" href="/workflows/project-canvas-and-chat" icon={<PanelsTopLeft />}>
+    Work from the canvas, the chat window, the terminal, and the command palette.
+  </Card>
+  <Card title="Magic commands" href="/workflows/magic-commands" icon={<WandSparkles />}>
+    Use built-in commands for context, commits, PRs, reviews, notes, and conflict resolution.
   </Card>
 </Cards>
-```
 
-### Callout
+## Connect your workflow
 
-<Callout type="warn" title="Heads up">
-Use callouts for warnings, notes, migration details, and quick guidance.
-</Callout>
-
-```mdx
-<Callout type="warn" title="Heads up">
-Use callouts for warnings, notes, migration details, and quick guidance.
-</Callout>
-```
-
-### Tabs
-
-<Tabs items={["Bun", "Docker"]}>
-  <Tab value="Bun">
-
-```bash
-cd src
-bun install
-bun run dev
-```
-
-  </Tab>
-  <Tab value="Docker">
-
-```bash
-cd src
-bun run build
-cd ..
-docker build -t jean-docs .
-docker run -p 8080:80 jean-docs
-```
-
-  </Tab>
-</Tabs>
-
-```mdx
-<Tabs items={["Bun", "Docker"]}>
-  <Tab value="Bun">
-    Bun instructions
-  </Tab>
-  <Tab value="Docker">
-    Docker instructions
-  </Tab>
-</Tabs>
-```
-
-### Files
-
-<Files>
-  <Folder name="src" defaultOpen>
-    <Folder name="content/docs" defaultOpen>
-      <File name="index.mdx" />
-      <File name="getting-started/installation.mdx" />
-    </Folder>
-    <Folder name="src" defaultOpen>
-      <File name="routes/$.tsx" />
-      <File name="components/mdx.tsx" />
-    </Folder>
-  </Folder>
-  <File name="Dockerfile" />
-  <File name="nginx.conf" />
-</Files>
-
-```mdx
-<Files>
-  <Folder name="src" defaultOpen>
-    <Folder name="content/docs" defaultOpen>
-      <File name="index.mdx" />
-    </Folder>
-  </Folder>
-  <File name="Dockerfile" />
-</Files>
-```
-
-### Steps
-
-<Steps>
-  <Step>
-
-#### Create the page
-
-Add a new `.mdx` file inside `src/content/docs`.
-
-  </Step>
-  <Step>
-
-#### Write the content
-
-Use markdown, code blocks, and the built-in MDX components.
-
-  </Step>
-  <Step>
-
-#### Preview it
-
-Run `bun run dev` in `src` and open `/docs`.
-
-  </Step>
-</Steps>
-
-```mdx
-<Steps>
-  <Step>
-
-#### Create the page
-
-Add a new `.mdx` file.
-
-  </Step>
-  <Step>
-
-#### Preview it
-
-Run the dev server.
-
-  </Step>
-</Steps>
-```
-
-### Zoomable images
-
-Markdown images are zoomable automatically:
-
-![Jean mark](./jean-mark.svg)
-
-You can also use the component directly when you want to pass explicit props:
-
-<ZoomImage src="/docs/jean-mark.svg" alt="Jean mark" width={160} height={160} />
-
-```mdx
-![Jean mark](./jean-mark.svg)
-
-<ZoomImage src="/docs/jean-mark.svg" alt="Jean mark" width={160} height={160} />
-```
-
-## Authoring notes
-
-- Markdown images are zoomable by default.
-- Fumadocs UI components are available in MDX without page-level imports.
-- Search uses the local static index generated from your content.
-- The deployable static output ends up in `src/.output/public`.
-
-## Next steps
-
-Start replacing this content with your product documentation under `src/content/docs`.
+<Cards>
+  <Card title="GitHub, Linear, and reviews" href="/workflows/github-linear-and-reviews" icon={<GitPullRequest />}>
+    Start sessions from issues, PRs, branches, security alerts, advisories, and Linear tickets.
+  </Card>
+  <Card title="Settings and Customization" href="/manage/preferences-and-customization" icon={<Cog />}>
+    Tune backends, prompts, fonts, keybindings, integrations, and experimental features.
+  </Card>
+  <Card title="Web access and headless" href="/manage/web-access-and-headless" icon={<Globe />}>
+    Expose Jean over the built-in HTTP server or run it with `--headless`.
+  </Card>
+  <Card title="Archive, Recovery, Updates" href="/manage/archive-recovery-and-updates" icon={<ArchiveRestore />}>
+    Keep sessions tidy, restore work, and understand how updates behave.
+  </Card>
+</Cards>

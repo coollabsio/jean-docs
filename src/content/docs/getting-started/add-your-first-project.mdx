@@ -1,0 +1,93 @@
+---
+title: Add Your First Project
+description: Bring a repository into Jean, organize it in the sidebar, and decide how much automation you want on day one.
+icon: FolderOpen
+---
+
+Projects are the top-level unit in Jean.
+
+Once a project is added, Jean can create a base session for it immediately and open the rest of the workflow around that repo.
+
+## Add a repository
+
+From the sidebar, use **New** and choose **Project**.
+
+Jean adds the repository, expands it in the sidebar, selects it, and can automatically open a base session so you can start working right away.
+
+## Folders vs projects
+
+Jean lets you create folders in the sidebar as well.
+
+Use a folder when you want to:
+- group related repositories
+- separate client work from internal work
+- keep the sidebar readable across many repos
+
+Use a project when the entry points to a real git repository.
+
+## What happens next
+
+When a project is added, Jean can:
+- open the project canvas
+- create the base session automatically
+- offer the `jean.json` wizard if you have not seen it yet
+
+That means you can go from "pick a repo" to "talk to the agent" with almost no dead space in between.
+
+## Add a `jean.json`
+
+`jean.json` is the project-level automation file Jean reads from the repository root.
+
+It can define:
+- a setup script to run after new worktree creation
+- a teardown script to run before worktree deletion
+- one or more run commands for the terminal
+- named ports for dev services
+
+Example:
+
+```json
+{
+  "scripts": {
+    "setup": "bun install",
+    "teardown": "docker compose down",
+    "run": ["bun run dev"]
+  },
+  "ports": [
+    { "port": 3000, "label": "App" },
+    { "port": 5173, "label": "Vite" }
+  ]
+}
+```
+
+Jean also exposes a few useful variables to these scripts:
+- `$JEAN_WORKSPACE_PATH`
+- `$JEAN_ROOT_PATH`
+- `$JEAN_BRANCH`
+
+## Keep it simple at first
+
+Your first `jean.json` does not need to be perfect.
+
+Start with:
+- a single setup command if your worktrees need bootstrapping
+- one run command if you launch a local dev server
+- named ports only if they help you move faster
+
+## Project-level settings
+
+After the project exists, you can also customize:
+- avatar
+- default backend
+- default provider
+- default worktree directory
+- enabled MCP servers
+- custom system prompt
+- Linear API key and team filter
+- linked projects for shared context flows
+
+## Next reads
+
+- [Start your first session](/getting-started/start-your-first-session)
+- [Projects, worktrees, and sessions](/core-concepts/projects-worktrees-and-sessions)
+- [Backends, models, and MCP](/core-concepts/backends-models-and-mcp)

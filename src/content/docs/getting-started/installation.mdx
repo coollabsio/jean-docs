@@ -1,27 +1,67 @@
 ---
-title: Installation
-description: Set up the Jean docs site locally with Bun.
+title: Install and Setup
+description: Install Jean, connect your preferred backend, and complete the first-run setup.
 icon: Download
 ---
 
-## Install dependencies
+Jean runs as a native desktop app and works with the CLI tools you already use.
+
+You can use Claude CLI, Codex CLI, OpenCode, or a mix of them. Git is required. GitHub CLI and a Linear API key are optional, but they unlock more of the workflow.
+
+## What you need
+
+- Git
+- At least one backend: Claude CLI, Codex CLI, or OpenCode
+- A Jean install from Homebrew or the [coollabsio/jean releases](https://github.com/coollabsio/jean/releases)
+- Optional: GitHub CLI for issues, PRs, workflows, and security context
+- Optional: Linear personal API key for Linear issue flows
+
+## Install Jean
+
+<Tabs items={["Homebrew", "Download"]}>
+  <Tab value="Homebrew">
 
 ```bash
-cd src
-bun install
+brew tap coollabsio/jean
+brew install --cask jean
 ```
 
-## Start the docs app
+  </Tab>
+  <Tab value="Download">
+    Download the latest desktop build from [coollabsio/jean/releases](https://github.com/coollabsio/jean/releases), then move it into your normal app flow for macOS, Windows, or Linux.
+  </Tab>
+</Tabs>
 
-```bash
-bun run dev
-```
+## Complete setup
 
-The docs app runs on `http://localhost:3000/docs`.
+When Jean opens for the first time it checks whether any supported backends are installed.
 
-## Content locations
+If none are available, the welcome screen guides you through setup before you can add projects.
 
-- App code lives in `src/src`
-- Documentation content lives in `src/content/docs`
-- Static assets for the docs path live in `src/public/docs`
-- Build-time generators live in `src/scripts`
+In the setup flow you can:
+- verify CLI installation status
+- authenticate Claude CLI, Codex CLI, GitHub CLI, and OpenCode
+- choose where each CLI comes from when path-based installs are available
+- set your default backend, model, and other defaults
+- decide whether you want Jean to open terminals and editors with your preferred apps
+
+<Callout title="Good default">
+If you are new to Jean, start with one backend you already trust and add the others later. The app is easier to learn when the first session has fewer moving parts.
+</Callout>
+
+## Optional tools
+
+- **GitHub CLI** adds issue, PR, workflow, and security investigation flows.
+- **Linear API key** lets Jean pull Linear issues into the new-session flow.
+- **Custom Claude CLI provider profiles** let you route Claude CLI through alternate endpoints while keeping Jean's workflow intact.
+
+<Callout title="Web access comes later">
+Headless mode and browser access belong to the runtime side of Jean, not the install step. See the web access guide once the desktop setup is done.
+</Callout>
+
+## Next reads
+
+- [Add your first project](/getting-started/add-your-first-project)
+- [Start your first session](/getting-started/start-your-first-session)
+- [Backends, models, and MCP](/core-concepts/backends-models-and-mcp)
+- [Web access and headless](/manage/web-access-and-headless)

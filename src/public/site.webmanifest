@@ -5,12 +5,18 @@
   "scope": "/docs/",
   "display": "standalone",
   "background_color": "#071412",
-  "theme_color": "#0f766e",
+  "theme_color": "#6b16ed",
   "icons": [
     {
-      "src": "/docs/favicon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml"
+      "src": "/docs/brand/favicon.ico",
+      "sizes": "16x16 32x32",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/docs/brand/logo.webp",
+      "sizes": "640x640",
+      "type": "image/webp",
+      "purpose": "any"
     }
   ]
 }

@@ -1,0 +1,88 @@
+name: Production Build
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  GITHUB_REGISTRY: ghcr.io
+  IMAGE_NAME: coollabsio/jean-docs
+  VITE_SITE_URL: https://jean.build
+  VITE_PLAUSIBLE_DOMAIN: jean.build/docs
+  VITE_PLAUSIBLE_SCRIPT_URL: ${{ secrets.VITE_PLAUSIBLE_SCRIPT_URL }}
+  VITE_PLAUSIBLE_API_HOST: ${{ secrets.VITE_PLAUSIBLE_API_HOST }}
+
+jobs:
+  build-push:
+    strategy:
+      matrix:
+        include:
+          - arch: amd64
+            platform: linux/amd64
+            runner: ubuntu-24.04
+          - arch: aarch64
+            platform: linux/arm64
+            runner: ubuntu-24.04-arm
+    runs-on: ${{ matrix.runner }}
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to ${{ env.GITHUB_REGISTRY }}
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.GITHUB_REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and Push Image (${{ matrix.arch }})
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: Dockerfile
+          platforms: ${{ matrix.platform }}
+          build-args: |
+            VITE_SITE_URL=${{ env.VITE_SITE_URL }}
+            VITE_PLAUSIBLE_SCRIPT_URL=${{ env.VITE_PLAUSIBLE_SCRIPT_URL }}
+            VITE_PLAUSIBLE_DOMAIN=${{ env.VITE_PLAUSIBLE_DOMAIN }}
+            VITE_PLAUSIBLE_API_HOST=${{ env.VITE_PLAUSIBLE_API_HOST }}
+          push: true
+          tags: |
+            ${{ env.GITHUB_REGISTRY }}/${{ env.IMAGE_NAME }}:latest-${{ matrix.arch }}
+          cache-from: type=gha,scope=build-${{ matrix.arch }}
+          cache-to: type=gha,mode=max,scope=build-${{ matrix.arch }}
+
+  merge-manifest:
+    runs-on: ubuntu-24.04
+    needs: build-push
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Login to ${{ env.GITHUB_REGISTRY }}
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.GITHUB_REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create & publish manifest on ${{ env.GITHUB_REGISTRY }}
+        run: |
+          docker buildx imagetools create \
+          ${{ env.GITHUB_REGISTRY }}/${{ env.IMAGE_NAME }}:latest-amd64 \
+          ${{ env.GITHUB_REGISTRY }}/${{ env.IMAGE_NAME }}:latest-aarch64 \
+          --tag ${{ env.GITHUB_REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+
+      - name: Deploy to Coolify
+        run: |
+          curl --request GET '${{ secrets.COOLIFY_WEBHOOK }}' --header 'Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}'

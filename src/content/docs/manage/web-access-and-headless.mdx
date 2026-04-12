@@ -1,0 +1,68 @@
+---
+title: Web Access and Headless
+description: Expose Jean over its built-in HTTP server or run it without the desktop window.
+icon: Globe
+---
+
+Jean includes an embedded HTTP server for browser access.
+
+This is useful when you want to keep the app running on another machine, open it from a browser, or use the headless mode as a long-lived workspace host.
+
+## What web access provides
+
+The HTTP server serves the frontend and keeps the app state connected over WebSocket.
+
+In practice, that means you can:
+- open Jean in a browser
+- keep using the same projects, worktrees, and sessions
+- copy a tokenized URL for quick access
+
+## Default behavior
+
+The safe baseline is:
+- HTTP server disabled
+- localhost-only binding
+- token required
+
+That is the right place to start unless you have a clear reason to expose Jean more broadly.
+
+## What you can configure
+
+From Preferences, you can control:
+- whether the server is running
+- port
+- bind host
+- auto-start behavior
+- whether a token is required
+- token regeneration
+
+Jean can also list likely bind host options for the machine so you do not have to guess the address manually.
+
+## Headless mode
+
+To run Jean without the desktop window:
+
+```bash
+jean --headless --host 127.0.0.1 --port 3456
+```
+
+Swap the host if you need network access, but keep token protection enabled unless you have a stronger access layer in front of it.
+
+## A simple remote setup
+
+1. Start Jean in headless mode.
+2. Keep it on a loopback bind if you only need local browser access.
+3. If you need remote access, bind intentionally and keep the token on.
+4. Copy the generated URL with the token appended when needed.
+
+## Use this when
+
+Web access and headless mode make sense when:
+- Jean runs on a dedicated development machine
+- you want browser access to long-running work
+- you need to check session state without opening the desktop app
+
+## Next reads
+
+- [Local-first and security](/about/local-first-and-security)
+- [Archive, recovery, and updates](/manage/archive-recovery-and-updates)

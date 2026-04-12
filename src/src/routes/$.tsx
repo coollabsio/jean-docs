@@ -11,6 +11,11 @@ import { baseOptions } from '@/lib/layout.shared';
 import { absoluteUrl, getDocOgPath, site } from '@/lib/site';
 import { source } from '@/lib/source';
 
+function toPublicDocUrl(url: string): string {
+  if (url === '/') return site.docsBasePath;
+  return `${site.docsBasePath}${url}`;
+}
+
 export const Route = createFileRoute('/$')({
   component: Page,
   loader: async ({ params }) => {
@@ -82,7 +87,7 @@ const serverLoader = createServerFn({
       pageTree: await source.serializePageTree(source.getPageTree()),
       path: page.path,
       title: page.data.title,
-      url: page.url,
+      url: toPublicDocUrl(page.url),
     } satisfies LoaderData;
   });
 

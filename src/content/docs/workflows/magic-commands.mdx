@@ -1,0 +1,84 @@
+---
+title: Magic Commands
+description: Use Jean's built-in commands for context management, commits, reviews, PRs, notes, and conflict resolution.
+icon: WandSparkles
+---
+
+Magic commands are Jean's opinionated shortcuts for common development moves.
+
+They package prompt construction, git actions, and context loading into workflows that are easier to repeat than a hand-written prompt every time.
+
+## What lives in the magic menu
+
+Jean groups magic commands into a few main areas.
+
+## Context
+
+- **Save Context** stores a summarized snapshot for later reuse
+- **Load Context** pulls a saved summary back into the current flow
+- **Linked Projects** shares context across related repositories
+- **Create Recap** generates a digest of the current session
+
+## Commit and sync
+
+- **Commit**
+- **Commit & Push**
+- **Revert Commit**
+- **Pull**
+- **Push**
+
+These work well when you want Jean to help with the commit message or guide the sequence instead of manually stitching it together.
+
+## Pull request work
+
+- **Open or Create PR**
+- **Review**
+- **PR Comments**
+- **Merge**
+
+Jean can generate PR content, review diffs, and help address inline review comments from an existing PR.
+
+## Investigation and release work
+
+- **Investigate Issues**
+- **Investigate Pull Requests**
+- **Generate Release Notes**
+
+These flows are useful because Jean already knows how to load and format the surrounding context before the model starts reasoning.
+
+## Branch work
+
+- **Merge**
+- **Resolve Conflicts**
+
+The conflict workflow is especially useful when you want Jean to stay with the operation until the repo is back in a healthy state.
+
+## Why these are different from plain prompts
+
+Magic commands carry defaults for:
+- prompt templates
+- model choice
+- provider choice
+- backend choice
+- reasoning effort
+
+You can override those defaults in Preferences, which means the workflow stays the same while the engine behind it changes.
+
+## Good uses for magic commands
+
+Use a magic command when:
+- the task is common and repeatable
+- you want Jean to pull structured context first
+- the output format matters
+- you want the same flow across many repos
+
+Use a plain chat message when:
+- the task is unusual
+- you are still exploring the problem
+- you want a looser conversation before choosing a workflow
+
+## Next reads
+
+- [GitHub, Linear, and reviews](/workflows/github-linear-and-reviews)
+- [Project canvas and chat](/workflows/project-canvas-and-chat)
+- [Preferences and customization](/manage/preferences-and-customization)

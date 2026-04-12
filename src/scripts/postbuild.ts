@@ -1,4 +1,4 @@
-import { mkdir, rm, writeFile } from 'node:fs/promises';
+import { cp, mkdir, rm, writeFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { Resvg } from '@resvg/resvg-js';
 import { loader, source as createSource } from 'fumadocs-core/source';
@@ -95,7 +95,7 @@ async function writeDocsManifest() {
   const docSource = createSource(docSourceFiles);
   const docLoader = loader({
     source: docSource,
-    baseUrl: site.docsBasePath,
+    baseUrl: '/',
   });
   const pageTree = await docLoader.serializePageTree(docLoader.getPageTree());
   const pages = Object.fromEntries(
@@ -107,7 +107,7 @@ async function writeDocsManifest() {
         ogImagePath: getDocOgPath(page.slugs),
         path: page.path,
         title: page.data.title,
-        url: page.url,
+        url: page.url === '/' ? site.docsBasePath : `${site.docsBasePath}${page.url}`,
       },
     ]),
   );
@@ -118,6 +118,19 @@ async function writeDocsManifest() {
     JSON.stringify({ pageTree, pages }, null, 2),
     'utf8',
   );
+}
+
+async function copyBaseScopedPublicAssets() {
+  const publicImages = resolve(import.meta.dir, '../public/images');
+  const docsImages = resolve(import.meta.dir, '../.output/public/docs/images');
+  const publicBrand = resolve(import.meta.dir, '../public/brand');
+  const docsBrand = resolve(import.meta.dir, '../.output/public/docs/brand');
+  const publicManifest = resolve(import.meta.dir, '../public/site.webmanifest');
+  const docsManifest = resolve(import.meta.dir, '../.output/public/docs/site.webmanifest');
+
+  await cp(publicImages, docsImages, { recursive: true, force: true });
+  await cp(publicBrand, docsBrand, { recursive: true, force: true });
+  await cp(publicManifest, docsManifest, { force: true });
 }
 
 async function cleanupNonStaticOutput() {
@@ -133,4 +146,5 @@ await writeOgImages();
 await writeSitemap();
 await writeRobots();
 await writeDocsManifest();
+await copyBaseScopedPublicAssets();
 await cleanupNonStaticOutput();

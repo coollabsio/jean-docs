@@ -2,7 +2,7 @@ import { createRootRoute, HeadContent, Outlet, Scripts } from '@tanstack/react-r
 import { RootProvider } from 'fumadocs-ui/provider/tanstack';
 import * as React from 'react';
 import SearchDialog from '@/components/search';
-import { absoluteUrl, site } from '@/lib/site';
+import { absoluteUrl, publicAssetFallbackPath, site } from '@/lib/site';
 import appCss from '@/styles/app.css?url';
 
 export const Route = createRootRoute({
@@ -69,8 +69,9 @@ export const Route = createRootRoute({
     ],
     links: [
       { rel: 'stylesheet', href: appCss },
-      { rel: 'icon', href: `${site.docsBasePath}/favicon.svg`, type: 'image/svg+xml' },
-      { rel: 'manifest', href: `${site.docsBasePath}/site.webmanifest` },
+      { rel: 'icon', href: publicAssetFallbackPath('/brand/favicon.ico'), type: 'image/x-icon', sizes: 'any' },
+      { rel: 'shortcut icon', href: publicAssetFallbackPath('/brand/favicon.ico') },
+      { rel: 'manifest', href: publicAssetFallbackPath('/site.webmanifest') },
       { rel: 'alternate', href: absoluteUrl(site.llmsUrl), title: 'Jean LLM Index', type: 'text/plain' },
     ],
   }),

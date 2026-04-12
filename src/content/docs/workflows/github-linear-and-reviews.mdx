@@ -1,0 +1,71 @@
+---
+title: GitHub, Linear, and Reviews
+description: Start work from issues, PRs, workflows, security alerts, advisories, and Linear tickets.
+icon: GitPullRequest
+---
+
+Jean is strongest when work starts from real repository context instead of a blank chat box.
+
+That is where the GitHub and Linear flows come in.
+
+## Start from GitHub context
+
+When you create a new session for a project, Jean can start from:
+- GitHub issues
+- pull requests
+- workflow runs
+- security alerts
+- security advisories
+- existing branches
+
+For many of these, Jean can create the worktree and immediately launch the matching investigation flow.
+
+## Start from Linear
+
+If you add a Linear API key, Jean can list and search Linear issues for the project.
+
+That gives you a path from ticket to worktree to session without copying the issue into the prompt by hand.
+
+## GitHub dashboard
+
+Jean also includes a cross-project GitHub dashboard so you can inspect issues, PRs, workflows, and security work across repositories from one place.
+
+This is especially useful when you are juggling multiple repos and want one queue instead of five browser tabs.
+
+## PR review workflows
+
+Jean supports several review-oriented flows:
+- investigate a PR
+- review code changes
+- address inline PR comments
+- open or update a PR
+- merge a PR
+
+Because the workspace is already branch-aware, review flows stay close to the actual diff and terminal state.
+
+## Security investigation
+
+Jean can also start work from:
+- Dependabot alerts
+- repository security advisories
+
+Those flows are useful when you need to answer questions like:
+- is the vulnerable code path actually used here?
+- what should be upgraded?
+- what compatibility work is needed?
+
+## A practical pattern
+
+A common Jean workflow looks like this:
+
+1. Load the GitHub issue, PR, alert, or Linear ticket.
+2. Create the worktree directly from that item.
+3. Let Jean start the matching investigation flow.
+4. Keep a second session tab for implementation or review.
+5. Use magic commands for commit, PR content, or review comments.
+
+## Next reads
+
+- [Magic commands](/workflows/magic-commands)
+- [Backends, models, and MCP](/core-concepts/backends-models-and-mcp)
+- [Archive, recovery, and updates](/manage/archive-recovery-and-updates)

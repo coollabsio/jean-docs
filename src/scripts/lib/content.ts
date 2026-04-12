@@ -21,6 +21,7 @@ export interface DocPageSourceFile {
   data: {
     title?: string;
     description?: string;
+    icon?: string;
   };
 }
 
@@ -30,6 +31,7 @@ export interface DocMetaSourceFile {
   data: {
     title?: string;
     description?: string;
+    icon?: string;
     root?: boolean;
     defaultOpen?: boolean;
     collapsible?: boolean;
@@ -138,6 +140,7 @@ export async function getDocSourceFiles() {
         data: {
           title: typeof parsed.data.title === 'string' ? parsed.data.title : undefined,
           description: typeof parsed.data.description === 'string' ? parsed.data.description : undefined,
+          icon: typeof parsed.data.icon === 'string' ? parsed.data.icon : undefined,
         },
       });
       continue;
@@ -153,6 +156,7 @@ export async function getDocSourceFiles() {
         data: {
           title: typeof parsed.title === 'string' ? parsed.title : undefined,
           description: typeof parsed.description === 'string' ? parsed.description : undefined,
+          icon: typeof parsed.icon === 'string' ? parsed.icon : undefined,
           root: typeof parsed.root === 'boolean' ? parsed.root : undefined,
           defaultOpen: typeof parsed.defaultOpen === 'boolean' ? parsed.defaultOpen : undefined,
           collapsible: typeof parsed.collapsible === 'boolean' ? parsed.collapsible : undefined,

@@ -1,3 +1,24 @@
 {
-  "pages": ["index", "---Getting Started---", "getting-started/installation", "getting-started/deployment"]
+  "pages": [
+    "index",
+    "---About Jean---",
+    "about/what-is-jean",
+    "about/how-jean-works",
+    "about/local-first-and-security",
+    "---Get Started---",
+    "getting-started/installation",
+    "getting-started/add-your-first-project",
+    "getting-started/start-your-first-session",
+    "---Core Concepts---",
+    "core-concepts/projects-worktrees-and-sessions",
+    "core-concepts/backends-models-and-mcp",
+    "---Workflows---",
+    "workflows/project-canvas-and-chat",
+    "workflows/magic-commands",
+    "workflows/github-linear-and-reviews",
+    "---Manage Jean---",
+    "manage/preferences-and-customization",
+    "manage/web-access-and-headless",
+    "manage/archive-recovery-and-updates"
+  ]
 }

@@ -26,24 +26,22 @@ The static output is written to `src/.output/public/`.
 Copy `src/.env.example` to a local `.env` file and set the production values before building:
 
 ```bash
+# Public site URL used for canonical URLs, sitemap entries, and OG metadata
 VITE_SITE_URL=https://your-domain.example
+
+# Plausible script URL loaded by the browser
 VITE_PLAUSIBLE_SCRIPT_URL=https://plausible.your-domain.example/js/script.js
+
+# Domain recorded in Plausible analytics for these docs pageviews
 VITE_PLAUSIBLE_DOMAIN=your-domain.example
+
 # Optional: only set this if events should go to a different host or base path
 # VITE_PLAUSIBLE_API_HOST=https://plausible.your-domain.example
 ```
 
 ## Docker
 
-Build the static site first:
-
-```bash
-cd src
-bun run build
-cd ..
-```
-
-Then build and run the nginx image:
+Build and run the multi-stage nginx image:
 
 ```bash
 docker build \
@@ -53,6 +51,25 @@ docker run -p 8080:80 jean-docs
 ```
 
 Open `http://localhost:8080/docs`.
+
+The Docker build installs dependencies with Bun, builds the static site inside the image, then copies only the exported files into nginx.
+
+## GitHub Actions
+
+The repo includes two GHCR build workflows modeled after the Coolify docs setup:
+
+- `.github/workflows/production-build.yml` for `main`
+- `.github/workflows/staging-build.yml` for `next`
+
+Set these secrets before enabling them:
+
+- `VITE_PLAUSIBLE_SCRIPT_URL`
+- `VITE_PLAUSIBLE_API_HOST` (optional)
+- `VITE_PLAUSIBLE_SCRIPT_URL_NEXT`
+- `VITE_PLAUSIBLE_API_HOST_NEXT` (optional)
+- `COOLIFY_WEBHOOK`
+- `COOLIFY_WEBHOOK_NEXT`
+- `COOLIFY_TOKEN`
 
 ## Included setup
 

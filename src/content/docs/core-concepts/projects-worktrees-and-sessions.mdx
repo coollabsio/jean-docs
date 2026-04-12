@@ -1,0 +1,99 @@
+---
+title: Projects, Worktrees, Sessions
+description: The core objects Jean uses to keep AI work organized and recoverable.
+icon: FolderTree
+---
+
+If Jean feels simple when it is new and still usable when it is full, this model is the reason.
+
+## The hierarchy
+
+Jean organizes work like this:
+
+```sh
+Folder
+└── Project
+    ├── Base session
+    │   └── Session tabs
+    └── Worktree
+        └── Session tabs
+```
+
+## Project
+
+A project is the repository Jean knows how to operate on.
+
+Projects can hold defaults such as:
+- backend
+- provider
+- worktree directory
+- MCP server selection
+- custom system prompt
+- Linear settings
+- linked projects
+
+## Base session
+
+A base session uses the project's main directory directly.
+
+Think of it as the stay-on-the-trunk option.
+
+Use it when:
+- you are exploring a repo
+- you are making a tiny change
+- you are doing review or planning work
+- you do not want extra branch management
+
+## Worktree
+
+A worktree is a branch-backed workspace with its own path and lifecycle.
+
+Jean tracks metadata around each worktree, including:
+- branch and path
+- setup script results
+- PR linkage
+- issue, PR, security, or Linear origin
+- cached git and PR status
+- archive state
+
+Use a worktree when:
+- the task deserves isolation
+- you want separate terminal state
+- you may need to switch away and come back later
+- you are handling several tasks in parallel on the same repo
+
+## Session
+
+A session is a chat thread inside a base session or worktree.
+
+Sessions also keep UI and workflow state such as:
+- selected model and backend
+- provider and execution mode
+- approval state
+- recap digest
+- review results
+- pending questions or permission requests
+- archive state
+
+## Archive vs delete
+
+Jean can either archive or permanently remove items when you close them, depending on your preferences.
+
+Archiving is useful when you want a cleaner active workspace without losing the conversation or worktree record.
+
+## Labels, recency, and unread work
+
+Jean also tracks enough metadata to help you resume work:
+- labels
+- last opened time
+- last activity time
+- unread session state
+- most recently archived item
+
+That makes the canvas feel more like a work queue and less like a raw file tree.
+
+## Next reads
+
+- [Backends, models, and MCP](/core-concepts/backends-models-and-mcp)
+- [Project canvas and chat](/workflows/project-canvas-and-chat)
+- [Archive, recovery, and updates](/manage/archive-recovery-and-updates)

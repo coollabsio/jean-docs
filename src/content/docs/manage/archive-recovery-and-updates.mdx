@@ -1,0 +1,75 @@
+---
+title: Archive, Recovery, Updates
+description: Keep the workspace tidy, restore useful history, and understand how Jean updates and cleans up local state.
+icon: ArchiveRestore
+---
+
+Jean is built for long-running work, which means it also needs a clean way to retire work without losing the useful parts.
+
+## Archive vs delete
+
+When you close sessions or worktrees, Jean can:
+- archive them
+- delete them permanently
+
+The right choice depends on how often you revisit old work.
+
+Archiving is a good default when:
+- you return to older tasks often
+- you want session history without active clutter
+- you use Jean as a durable project memory
+
+Deletion is a good default when:
+- you prefer a minimal workspace
+- you already have everything you need in git and PR history
+
+## Retention and restore
+
+Jean tracks archive state and lets you:
+- open the archive view
+- restore the most recently archived item
+- keep archived items for a configured number of days
+
+That makes cleanup reversible without making the active view noisy.
+
+## Unread and orphaned work
+
+Jean also helps with cleanup around session state:
+- unread sessions can be surfaced as a queue
+- orphaned session data can be cleaned up from maintenance commands
+
+This matters when repos, worktrees, and sessions do not all disappear in the same order.
+
+## Recovery
+
+Because Jean stores important local state, recovery paths matter.
+
+The app keeps patterns for:
+- emergency data recovery
+- crash-state persistence
+- restoring archived work
+- keeping session metadata tied to the correct workspace
+
+## Updates
+
+Jean uses an app-style update flow instead of making you reinstall by hand every time.
+
+In practice that means:
+- automatic update checks after launch
+- a manual "check for updates" path
+- download and install flow through the app
+- restart when the update is ready
+
+## A practical maintenance routine
+
+Every so often:
+- archive finished work
+- restore anything you still need
+- remove true dead ends
+- check for updates
+- clean orphaned sessions if the workspace has had a lot of churn
+
+## Next reads
+
+- [Preferences and customization](/manage/preferences-and-customization)
+- [Project canvas and chat](/workflows/project-canvas-and-chat)

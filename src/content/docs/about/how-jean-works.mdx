@@ -1,0 +1,82 @@
+---
+title: How Jean Works
+description: Understand the flow from project to worktree to session, and how Jean keeps all of it tied together.
+icon: SplinePointer
+---
+
+Jean is built around the idea that AI work should follow the same boundaries as real development work.
+
+Instead of one endless thread per repo, Jean gives you a structure that matches how tasks actually happen.
+
+## The loop
+
+Most work in Jean follows the same loop:
+
+1. Add a project.
+2. Open a base session or create a worktree.
+3. Start one or more chat sessions inside that workspace.
+4. Attach context from files, MCP, GitHub, or Linear as needed.
+5. Use built-in commands for commits, reviews, PRs, notes, or investigation.
+6. Archive, restore, merge, or remove the workspace when the task is done.
+
+## The main building blocks
+
+### Project
+
+A project is the repository Jean knows about.
+
+Projects can also live inside folders so the sidebar stays usable when you have many repos.
+
+### Base session
+
+A base session works directly in the project's main directory and base branch context.
+
+Use it when you want to inspect, ask questions, or make small changes without creating a separate worktree.
+
+### Worktree
+
+A worktree is an isolated branch with its own path.
+
+Use it when you want clean task boundaries, separate terminal state, safer experimentation, or multiple tasks in flight at once.
+
+### Session
+
+A session is a chat tab inside a base session or worktree.
+
+You can keep several sessions for the same task space, give them different models or backends, archive them, or come back later.
+
+## What the UI is doing
+
+The main window has three broad states:
+- **Welcome view** when nothing is selected
+- **Project canvas** when a project is selected but no workspace chat is open
+- **Chat window** when a base session or worktree is active
+
+The project canvas is where Jean rolls up worktree state, session status, git information, PR state, and quick actions.
+
+The chat window is where you talk to the backend, approve plans, inspect tool calls, manage tabs, view files, and open the terminal panel.
+
+## How context moves through Jean
+
+Jean can pull context from several places:
+- the current repository and worktree files
+- MCP servers enabled globally, per project, or per session
+- loaded GitHub issue, PR, workflow, and security contexts
+- loaded Linear issue context
+- saved context snapshots and linked projects
+
+The important part is that context is scoped. A session belongs to one workspace, and Jean keeps the related state with that workspace instead of smearing it across unrelated tasks.
+
+## Why this model matters
+
+This structure makes a few things easier:
+- you can keep multiple tasks alive without mixing their branches or conversations
+- you can revisit older sessions without losing the surrounding repo context
+- you can switch backends or prompts without changing the whole project setup
+- you can archive work cleanly instead of keeping everything forever in the active view
+
+## Next reads
+
+- [Start your first session](/getting-started/start-your-first-session)
+- [Project canvas and chat](/workflows/project-canvas-and-chat)
+- [Magic commands](/workflows/magic-commands)
