@@ -8,3 +8,7 @@ src/node_modules/
 src/.output/
 src/.source/
 src/.tanstack/
+
+# ShadowArcanist dev pipeline stuff
+deployment.conf
+Taskfile.yaml

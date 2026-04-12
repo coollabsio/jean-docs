@@ -33,14 +33,14 @@ export const Route = createFileRoute('/$')({
     const title = data.isIndex ? site.title : `${data.title} | ${site.title}`;
     const description = data.description || site.description;
     const canonicalUrl = absoluteUrl(data.url.endsWith('/') ? data.url : `${data.url}`);
-    const ogImageUrl = absoluteUrl(data.ogImagePath);
+    const ogImageUrl = data.ogImagePath;
     const structuredData = {
       '@context': 'https://schema.org',
       '@type': data.isIndex ? 'WebPage' : 'TechArticle',
       headline: data.title,
       description,
       url: canonicalUrl,
-      image: ogImageUrl,
+      image: absoluteUrl(data.ogImagePath),
       inLanguage: site.locale,
       publisher: {
         '@type': 'Organization',
@@ -56,6 +56,9 @@ export const Route = createFileRoute('/$')({
         { property: 'og:description', content: description },
         { property: 'og:url', content: canonicalUrl },
         { property: 'og:image', content: ogImageUrl },
+        { property: 'og:image:type', content: 'image/png' },
+        { property: 'og:image:width', content: String(site.og.width) },
+        { property: 'og:image:height', content: String(site.og.height) },
         { property: 'og:type', content: data.isIndex ? 'website' : 'article' },
         { name: 'twitter:title', content: title },
         { name: 'twitter:description', content: description },

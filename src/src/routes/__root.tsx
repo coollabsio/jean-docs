@@ -6,8 +6,11 @@ import { absoluteUrl, publicAssetFallbackPath, site } from '@/lib/site';
 import '@/styles/app.css';
 
 export const Route = createRootRoute({
-  head: () => ({
-    meta: [
+  head: () => {
+    const rootOgImage = `${site.docsBasePath}/og/index.png`;
+
+    return {
+      meta: [
       {
         charSet: 'utf-8',
       },
@@ -48,7 +51,19 @@ export const Route = createRootRoute({
       },
       {
         property: 'og:image',
-        content: absoluteUrl(`${site.docsBasePath}/og/index.png`),
+        content: rootOgImage,
+      },
+      {
+        property: 'og:image:type',
+        content: 'image/png',
+      },
+      {
+        property: 'og:image:width',
+        content: String(site.og.width),
+      },
+      {
+        property: 'og:image:height',
+        content: String(site.og.height),
       },
       {
         name: 'twitter:card',
@@ -63,17 +78,22 @@ export const Route = createRootRoute({
         content: site.description,
       },
       {
+        name: 'twitter:image',
+        content: rootOgImage,
+      },
+      {
         name: 'keywords',
         content: site.keywords.join(', '),
       },
-    ],
-    links: [
-      { rel: 'icon', href: publicAssetFallbackPath('/brand/favicon.ico'), type: 'image/x-icon', sizes: 'any' },
-      { rel: 'shortcut icon', href: publicAssetFallbackPath('/brand/favicon.ico') },
-      { rel: 'manifest', href: publicAssetFallbackPath('/site.webmanifest') },
-      { rel: 'alternate', href: absoluteUrl(site.llmsUrl), title: 'Jean LLM Index', type: 'text/plain' },
-    ],
-  }),
+      ],
+      links: [
+        { rel: 'icon', href: publicAssetFallbackPath('/brand/favicon.ico'), type: 'image/x-icon', sizes: 'any' },
+        { rel: 'shortcut icon', href: publicAssetFallbackPath('/brand/favicon.ico') },
+        { rel: 'manifest', href: publicAssetFallbackPath('/site.webmanifest') },
+        { rel: 'alternate', href: absoluteUrl(site.llmsUrl), title: 'Jean LLM Index', type: 'text/plain' },
+      ],
+    };
+  },
   component: RootComponent,
 });
 

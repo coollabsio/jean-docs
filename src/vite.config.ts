@@ -4,6 +4,16 @@ import { tanstackStart } from '@tanstack/react-start/plugin/vite';
 import mdx from 'fumadocs-mdx/vite';
 import { nitro } from 'nitro/vite';
 import { defineConfig } from 'vite';
+import { getDocEntries } from './scripts/lib/content';
+import { siteDefinition } from './config/site.shared';
+
+const docEntries = await getDocEntries();
+const prerenderDocPages = docEntries.map((doc) => ({
+  path:
+    doc.routeSegments.length === 0
+      ? siteDefinition.docsBasePath
+      : `${siteDefinition.docsBasePath}/${doc.routeSegments.join('/')}`,
+}));
 
 export default defineConfig({
   base: '/docs/',
@@ -22,17 +32,15 @@ export default defineConfig({
         },
       },
       pages: [
+        ...prerenderDocPages,
         {
-          path: '/',
+          path: `${siteDefinition.docsBasePath}/api/search`,
         },
         {
-          path: '/api/search',
+          path: `${siteDefinition.docsBasePath}/llms.txt`,
         },
         {
-          path: '/llms.txt',
-        },
-        {
-          path: '/llms-full.txt',
+          path: `${siteDefinition.docsBasePath}/llms-full.txt`,
         },
       ],
     }),

@@ -14,6 +14,6 @@ export const siteDefinition = {
     accent: '#6b16ed',
     accentSoft: '#a855f7',
     text: '#f8fafc',
-    muted: '#b6c2bf',
+    muted: '#d8def0',
   },
 } as const;
