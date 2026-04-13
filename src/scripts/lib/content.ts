@@ -2,6 +2,7 @@ import { readFile, readdir, stat } from 'node:fs/promises';
 import { extname, join, relative, resolve, sep } from 'node:path';
 import matter from 'gray-matter';
 import { site } from './site';
+import { currentDirFromMetaUrl } from './runtime-path';
 
 export interface DocEntry {
   filePath: string;
@@ -39,7 +40,7 @@ export interface DocMetaSourceFile {
   };
 }
 
-const docsDir = resolve(import.meta.dir, '../../content/docs');
+const docsDir = resolve(currentDirFromMetaUrl(import.meta.url), '../../content/docs');
 
 async function walk(dir: string): Promise<string[]> {
   const entries = await readdir(dir, { withFileTypes: true });

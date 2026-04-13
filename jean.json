@@ -1,0 +1,7 @@
+{
+  "scripts": {
+    "setup": "cd src && bun i",
+    "teardown": null,
+    "run": "cd src && bun run dev"
+  }
+}

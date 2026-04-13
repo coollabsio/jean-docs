@@ -22,6 +22,11 @@ export default defineConfig({
   base: '/docs/',
   server: {
     port: 3000,
+    watch: {
+      ignored: ['**/.output/**', '**/node_modules/.nitro/**'],
+      usePolling: true,
+      interval: 1000,
+    },
   },
   plugins: [
     mdx(await import('./source.config')),

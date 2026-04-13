@@ -12,6 +12,7 @@
     "isolatedModules": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
+    "ignoreDeprecations": "6.0",
     "target": "ES2022",
     "allowJs": true,
     "forceConsistentCasingInFileNames": true,
