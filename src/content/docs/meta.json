@@ -12,12 +12,15 @@
     "---Core Concepts---",
     "core-concepts/projects-worktrees-and-sessions",
     "core-concepts/backends-models-and-mcp",
+    "core-concepts/project-linking",
     "---Workflows---",
     "workflows/project-canvas-and-chat",
     "workflows/magic-commands",
     "workflows/github-linear-and-reviews",
     "---Manage Jean---",
     "manage/preferences-and-customization",
+    "manage/magic-prompts",
+    "manage/opinionated-plugins",
     "manage/web-access-and-headless",
     "manage/archive-recovery-and-updates"
   ]

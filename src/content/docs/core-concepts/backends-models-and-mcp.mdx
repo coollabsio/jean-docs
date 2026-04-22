@@ -10,23 +10,53 @@ You can work with Claude CLI, Codex CLI, and OpenCode, then choose how much of t
 
 ## Backends
 
-Jean supports three backends:
+Jean supports four backends:
 - **Claude CLI**
 - **Codex CLI**
 - **OpenCode**
+- **Cursor Agent**
 
 You can set a global default backend and override it per project or per session.
+
+Each backend has different capabilities. Cursor Agent, for example, only supports `plan` and `yolo` execution modes.
 
 ## Models and reasoning
 
 Model selection is session-aware.
 
 Depending on the backend, Jean can also store and apply:
-- thinking level
-- reasoning effort
+- thinking level (Claude, Codex, OpenCode)
+- reasoning effort (Claude Opus adaptive)
 - execution mode
 
 That lets you keep a lighter model for quick work and a heavier one for review, investigation, or tricky implementation.
+
+### Thinking levels
+
+For Claude CLI, Jean exposes four levels with increasing token budgets:
+- **Off** — thinking disabled
+- **Think** — 4K token budget
+- **Megathink** — 10K token budget
+- **Ultrathink** — 32K token budget (default)
+
+Higher levels let the model reason more before answering, at the cost of more tokens and latency. Off is appropriate for short generation tasks where reasoning is not useful.
+
+### Effort levels (Opus adaptive thinking)
+
+Latest Claude Opus models on CLI 2.1.32+ replace the thinking-level dial with an adaptive effort dial:
+- **Low** — minimal thinking, skipped for simple tasks
+- **Medium** — moderate thinking
+- **High** — deep reasoning (default), almost always thinks
+- **xHigh** — extra-high effort (recommended default for coding and agentic work on Opus 4.7)
+- **Max** — no constraints on thinking depth
+
+Jean picks the correct control for the selected model automatically.
+
+### Adaptive thinking per mode
+
+Jean can apply different reasoning defaults depending on the execution mode.
+
+Plan mode often benefits from heavier thinking. Build and Yolo can run with lighter reasoning to keep the loop fast. The Magic Prompts pane is where those per-workflow overrides live.
 
 ## Providers
 
@@ -79,5 +109,7 @@ For most teams, a good starting setup is:
 ## Next reads
 
 - [Start your first session](/getting-started/start-your-first-session)
+- [Project linking](/core-concepts/project-linking)
 - [Magic commands](/workflows/magic-commands)
+- [Magic prompts](/manage/magic-prompts)
 - [Preferences and customization](/manage/preferences-and-customization)

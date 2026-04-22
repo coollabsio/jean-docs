@@ -53,6 +53,22 @@ In the chat window you can:
 
 Jean keeps that session tied to the current workspace so the conversation does not drift away from the branch you are working on.
 
+### File mentions and slash commands
+
+Two popovers speed up input:
+- `@` opens a fuzzy file picker. Type a name, press Enter, and the file is attached as a mention.
+- `/` opens the slash menu. It surfaces backend commands and installed plugin skills (for example, Claude Code skills or Codex skills). Up to 15 results with arrow-key navigation.
+
+Both popovers are keyboard-first so you can stay in the input while adding context.
+
+### Pasting content
+
+Jean processes pasted images and large blocks of text:
+- images pasted from the clipboard are resized and compressed before being attached (max 1568px on the longest side). Animated GIFs and small images are left alone.
+- text over roughly 2000 characters is automatically saved as an attached text file instead of filling the input.
+
+That keeps token usage low and the input readable.
+
 ## Execution modes
 
 Jean exposes three familiar modes for work that needs different levels of autonomy:
@@ -61,6 +77,17 @@ Jean exposes three familiar modes for work that needs different levels of autono
 - **Yolo** for fast, fully trusted execution
 
 Use the stricter mode until you trust the task, the repo, and the backend behavior.
+
+`Shift+Tab` cycles execution mode inside the chat. Cursor Agent only supports Plan and Yolo.
+
+## Plan approvals
+
+When Plan mode returns a plan, Jean shows it in a dialog before any execution. The buttons let you:
+- **Approve** and run the plan in the current session
+- **Approve and clear context** to start fresh with only the plan as input
+- **Approve in new worktree** to execute the plan in an isolated branch and path
+
+Those two extra options are useful when a plan grew out of exploration but deserves a clean execution environment.
 
 ## Session tabs
 

@@ -1,0 +1,64 @@
+---
+title: Project Linking
+description: Share context between related repositories so agents can read across project boundaries without copy-paste.
+icon: Link2
+---
+
+Many tasks span more than one repository.
+
+Project linking is Jean's way of telling the agent that two or more projects belong together, so context flows between them without manual setup.
+
+## What linking does
+
+When a project is linked to others, sessions in that project get:
+- read access to each linked project's directory
+- an injected reminder to check each linked project for `CLAUDE.md`, `AGENTS.md`, or `docs/`
+- a dedicated "Linked project contexts" section in the saved-context panel
+
+The agent can read files in linked projects but cannot write to them. Writes stay scoped to the active worktree.
+
+## Bidirectional by default
+
+Linking Project A to Project B also links B back to A.
+
+Jean keeps the relationship symmetric so you do not end up with one-way connections that silently drift.
+
+## Open the linked projects dialog
+
+The magic menu carries the entry point:
+- press `Cmd+M` (or `Ctrl+M`) to open the magic menu
+- choose **Linked Projects** (shortcut `K`)
+
+From there you can search for other projects, link them, and remove existing links.
+
+Only real projects can be linked. Folders are not linkable.
+
+## How it reaches the backend
+
+Under the hood, Jean passes each linked project directory to the Claude CLI via `--add-dir` flags.
+
+It also injects a short system prompt fragment that lists the linked directories and nudges the model to check them for instructions and documentation.
+
+That means cross-project reads are available automatically, not triggered by a special command.
+
+## When to link
+
+Link projects when:
+- an app and its documentation live in separate repos
+- a frontend and a backend coordinate on shared types or contracts
+- a monorepo was split but still behaves as one product
+- shared SDKs or libraries define types consumed elsewhere
+
+Do not link projects that happen to be nearby but have no overlap. The more linked projects, the more context the agent has to filter on every request.
+
+## Saved contexts across links
+
+Saved context snapshots are aware of links.
+
+In the chat UI, contexts from linked projects appear under a "Linked project contexts" header so they are easy to find when attaching prior state to a new session.
+
+## Next reads
+
+- [Magic commands](/workflows/magic-commands)
+- [Backends, models, and MCP](/core-concepts/backends-models-and-mcp)
+- [Projects, worktrees, and sessions](/core-concepts/projects-worktrees-and-sessions)

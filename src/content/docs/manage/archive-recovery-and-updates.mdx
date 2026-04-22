@@ -59,6 +59,15 @@ In practice that means:
 - a manual "check for updates" path
 - download and install flow through the app
 - restart when the update is ready
+- AppImage artifact support for Linux updates
+
+Jean also tracks CLI versions separately from the app. When a supported backend CLI (Claude, Codex, OpenCode, Cursor) has an update, Jean shows a CLI update modal so you can refresh the backend without leaving the app.
+
+## Quit confirmation
+
+If sessions are still executing when you quit, Jean shows a confirmation dialog listing the active work.
+
+That prevents accidental cancellation of long-running agent runs.
 
 ## A practical maintenance routine
 

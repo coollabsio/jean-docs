@@ -16,7 +16,7 @@ Jean groups magic commands into a few main areas.
 
 - **Save Context** stores a summarized snapshot for later reuse
 - **Load Context** pulls a saved summary back into the current flow
-- **Linked Projects** shares context across related repositories
+- **Linked Projects** shares context across related repositories (see [Project linking](/core-concepts/project-linking))
 - **Create Recap** generates a digest of the current session
 
 ## Commit and sync
@@ -32,11 +32,14 @@ These work well when you want Jean to help with the commit message or guide the 
 ## Pull request work
 
 - **Open or Create PR**
-- **Review**
-- **PR Comments**
+- **Update PR** refreshes the title and description on an existing PR using current commits
+- **Review** runs an AI code review and stores findings you can revisit in the Review panel
+- **PR Comments** loads inline review comments so Jean can address them one by one
 - **Merge**
 
 Jean can generate PR content, review diffs, and help address inline review comments from an existing PR.
+
+Open or Create PR and Update PR both use the Generate PR Content prompt, so you can tune voice, structure, and required fields once and reuse them everywhere. See [Magic prompts](/manage/magic-prompts).
 
 ## Investigation and release work
 
@@ -62,7 +65,12 @@ Magic commands carry defaults for:
 - backend choice
 - reasoning effort
 
-You can override those defaults in Preferences, which means the workflow stays the same while the engine behind it changes.
+You can override those defaults in the [Magic prompts pane](/manage/magic-prompts), which means the workflow stays the same while the engine behind it changes.
+
+## Opening the magic menu
+
+- `Cmd+M` on macOS or `Ctrl+M` elsewhere opens the menu from any chat
+- each item has a single-letter shortcut once the menu is open (for example, `K` for Linked Projects)
 
 ## Good uses for magic commands
 

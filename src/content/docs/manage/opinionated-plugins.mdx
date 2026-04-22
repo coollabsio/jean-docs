@@ -1,0 +1,63 @@
+---
+title: Opinionated Plugins
+description: One-click installs for curated tools that reduce token usage and reshape agent behavior across backends.
+icon: Puzzle
+---
+
+Jean ships an **Opinionated** pane in Preferences that installs curated third-party tools with one click.
+
+These are not built into Jean. They are external plugins Jean knows how to install, check, and link to for you.
+
+## What is included
+
+**RTK** — a system-wide CLI proxy that filters and compresses command outputs before they reach the agent. Cuts token consumption 60-90% on common dev commands like git, npm, docker, cargo. Runs transparently after install; every backend sees the smaller output.
+
+- Applies to: Claude, Codex, OpenCode, Cursor, every CLI backend
+- Scope: system-wide (shell-level)
+- Verify: `rtk status`
+- Configure: `rtk config`
+
+**Caveman** — a Claude Code skill that makes the agent answer in a terse, fragment-heavy style. Cuts output tokens roughly 65-75% while keeping technical accuracy.
+
+- Applies to: Claude only
+- Scope: Claude CLI plugin
+- Switch intensity: `/caveman lite|full|ultra`
+- Disable: `stop caveman`
+- Extra commands: `/caveman-commit`, `/caveman-review`, `/caveman-compress`
+
+## How the pane works
+
+Each plugin card shows:
+- name, description, and backend scope
+- install status (installed, version, or "Install" button)
+- GitHub link
+- usage steps once installed
+
+Jean calls the backend command to install the plugin, then shows a success or error toast.
+
+For plugins already installed, the card shows a refresh button to re-check status.
+
+## When to use each
+
+Use RTK when:
+- sessions burn tokens on long tool output (big git diffs, noisy test runs, container logs)
+- you want token savings that apply to every backend, not just Claude
+
+Use Caveman when:
+- you run long Claude sessions and want shorter replies
+- the terse style matches how you read answers
+- you are fine losing some verbose explanation
+
+Both can run together. RTK trims tool inputs. Caveman trims agent outputs.
+
+## Caveats
+
+These plugins are external projects. Jean installs and surfaces them, but it does not ship their source.
+
+Read the linked GitHub repos before enabling if you want full context on what each plugin does.
+
+## Next reads
+
+- [Settings and customization](/manage/preferences-and-customization)
+- [Magic prompts](/manage/magic-prompts)
+- [Backends, models, and MCP](/core-concepts/backends-models-and-mcp)

@@ -1,0 +1,92 @@
+---
+title: Magic Prompts
+description: Customize the prompt templates, models, and reasoning behind every built-in workflow in Jean.
+icon: Sparkles
+---
+
+Every magic command in Jean runs a prompt template.
+
+The Magic Prompts pane lets you replace those templates, pick a different model or backend per workflow, and keep the rest of the flow unchanged.
+
+## What is customizable
+
+Each built-in workflow exposes:
+- a prompt template
+- a backend override
+- a model override
+- a provider override (for Claude CLI)
+- a reasoning or thinking level override
+
+That means you can keep the UI and command flow identical while changing the engine behind any single workflow.
+
+## Prompts you can edit
+
+The pane covers the full set of built-in workflows:
+
+**Investigation**
+- Investigate Issue
+- Investigate Pull Request
+- Investigate Workflow Run
+- Investigate Security Alert
+- Investigate Advisory
+- Investigate Linear Issue
+- Handle Review Comments
+
+**Git and PR work**
+- Generate PR Content
+- Generate Commit Message
+- Code Review
+- Resolve Conflicts
+- Generate Release Notes
+
+**Session management**
+- Session Naming
+- Session Recap
+- Context Summary
+
+**System prompts**
+- Global system prompt (appended to every session)
+- Parallel execution prompt
+
+## Global system prompt
+
+The global system prompt is appended to every session Jean starts.
+
+Use it for:
+- house style rules
+- required tools or commands
+- documentation expectations
+- repo-wide conventions
+
+Keep it short. It is added on top of each backend's default system prompt, so long blocks waste tokens on every request.
+
+## Per-workflow model choices
+
+A common pattern is to mix models by workflow. For example:
+- a lighter model for session naming and commit messages
+- a heavier model for code review and PR investigation
+- a reasoning-heavy model for conflict resolution
+
+The backend and model dropdowns for each workflow make this easy to set without changing your global defaults.
+
+## When to edit a prompt
+
+Edit a prompt when:
+- the default output does not match your team's tone
+- you want a stricter format for PR titles or commit messages
+- a workflow needs extra guardrails (security, licensing, privacy)
+- you want an existing workflow to load additional context before answering
+
+Leave the default when the existing output is already close to what you want. The built-in templates are tuned for the current backends.
+
+## Reverting
+
+Every customized field can be reset to Jean's default.
+
+If a prompt starts misbehaving after an edit, reverting is the fastest way to confirm the template is the cause.
+
+## Next reads
+
+- [Magic commands](/workflows/magic-commands)
+- [Backends, models, and MCP](/core-concepts/backends-models-and-mcp)
+- [Settings and customization](/manage/preferences-and-customization)

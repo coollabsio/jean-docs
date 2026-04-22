@@ -16,16 +16,21 @@ The General pane covers the core app behavior, including:
 - terminal and editor defaults
 - git polling behavior
 - archive retention and removal behavior
+- notification sounds (None, Work Work, Job's Done)
+- expand tool calls by default
+- window behavior and cleanup settings
 - onboarding helpers and cleanup actions
 
 This is the best place to set the "every new project should feel like this" baseline.
 
 ## Appearance and keybindings
 
-You can adjust:
-- theme mode
-- UI and chat fonts
-- syntax themes
+The Appearance pane covers:
+- theme mode (light, dark, system)
+- UI font, chat font, and independent size scaling for each
+- zoom level (also `Cmd/Ctrl +` and `Cmd/Ctrl -`)
+- separate syntax themes for light and dark mode
+- file edit mode (inline view or external editor)
 - keyboard shortcuts
 
 Keybindings are user-configurable, so the defaults are only a starting point.
@@ -46,17 +51,11 @@ The Usage pane currently focuses on Codex usage information, including:
 
 ## Magic prompts
 
-Jean lets you customize the prompt templates behind built-in workflows such as:
-- issue investigation
-- PR investigation
-- code review
-- commit message generation
-- release notes
-- conflict resolution
-- session naming
-- recaps
+Jean lets you customize the prompt templates behind every built-in workflow (issue and PR investigation, code review, commit messages, release notes, conflict resolution, session naming, recaps, and more).
 
 You can also set model, provider, backend, and reasoning defaults per workflow.
+
+See [Magic prompts](/manage/magic-prompts) for the full catalog and override options.
 
 ## MCP servers and integrations
 
@@ -71,12 +70,21 @@ These decide how much extra context and tooling a session can see.
 Jean keeps some features behind an Experimental pane, including:
 - parallel execution prompting
 - automatic session recap
+- session recap model selection
 - debug mode
 
 These are useful, but they are intentionally labeled as less stable than the core workflow.
+
+## Opinionated plugins
+
+A dedicated Opinionated pane installs curated third-party tools that reduce token usage and reshape agent output.
+
+See [Opinionated plugins](/manage/opinionated-plugins) for what is included and how each plugin behaves.
 
 ## Next reads
 
 - [Backends, models, and MCP](/core-concepts/backends-models-and-mcp)
 - [Magic commands](/workflows/magic-commands)
+- [Magic prompts](/manage/magic-prompts)
+- [Opinionated plugins](/manage/opinionated-plugins)
 - [Web access and headless](/manage/web-access-and-headless)

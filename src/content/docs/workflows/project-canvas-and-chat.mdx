@@ -46,6 +46,25 @@ This is where you:
 - preview files and images
 - open diffs
 - keep a terminal panel beside the conversation
+- search conversation history with `Cmd/Ctrl+F`
+
+## Session labels and recap
+
+Each session carries a label and a recap you can rely on when jumping back in:
+- **Labels** — pick from presets or assign a custom color to distinguish active sessions on the canvas
+- **Recap** — Jean can auto-generate a short digest when you return to a session, and you can trigger one manually with `R`. The Experimental pane lets you pick which model writes the recap.
+
+Labels and recaps make the canvas usable even when many sessions pile up.
+
+## Session debug panel
+
+The Session Debug Panel shows the lower-level state of a session:
+- file paths Jean is reading from disk
+- run script logs
+- token usage and cost breakdowns
+- backend arguments and environment snapshots
+
+Open it when a session misbehaves or when you want to confirm what the backend actually saw.
 
 ## Terminal and file tools
 
@@ -56,8 +75,15 @@ Inside the workspace you can:
 - inspect file content and previews
 - open git diffs
 - open the workspace in your preferred editor or terminal
+- pop open a modal terminal drawer when you need a larger scratch terminal without leaving the chat
 
 That keeps the talking part close to the checking part.
+
+## Cross-project GitHub dashboard
+
+The command palette can open a cross-project GitHub dashboard that aggregates issues, PRs, and workflow runs across every project in Jean.
+
+Use it when you want a single view of open work before picking which worktree to resume.
 
 ## Command palette
 

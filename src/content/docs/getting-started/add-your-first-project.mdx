@@ -14,6 +14,8 @@ From the sidebar, use **New** and choose **Project**.
 
 Jean adds the repository, expands it in the sidebar, selects it, and can automatically open a base session so you can start working right away.
 
+You can also **Clone Project** from the same menu to clone a remote repository directly from Jean and add it in one step.
+
 ## Folders vs projects
 
 Jean lets you create folders in the sidebar as well.
@@ -80,11 +82,24 @@ After the project exists, you can also customize:
 - avatar
 - default backend
 - default provider
-- default worktree directory
+- default CLI profile
 - enabled MCP servers
 - custom system prompt
 - Linear API key and team filter
-- linked projects for shared context flows
+- linked projects for shared context flows (see [Project linking](/core-concepts/project-linking))
+
+Project Settings also has a built-in `jean.json` pane, so you can edit the automation file in-app without opening an editor.
+
+## Worktrees location
+
+By default, Jean creates worktrees under `~/jean/<project-name>/<worktree-name>`.
+
+The **Worktrees Location** section in the project's General pane lets you override the base directory per project. Jean always appends the project name to your chosen base, so multiple projects can share the same custom base dir without colliding.
+
+Use this when:
+- the default home directory does not have enough space
+- you want worktrees on a faster drive
+- you want project worktrees grouped under an existing workspace folder
 
 ## Next reads
 
