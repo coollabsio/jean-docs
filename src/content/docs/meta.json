@@ -22,6 +22,7 @@
     "manage/magic-prompts",
     "manage/opinionated-plugins",
     "manage/web-access-and-headless",
-    "manage/archive-recovery-and-updates"
+    "manage/archive-recovery-and-updates",
+    "manage/reset-settings"
   ]
 }

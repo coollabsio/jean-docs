@@ -1,0 +1,144 @@
+---
+title: Reset Settings
+description: Fully reset Jean by deleting the local config directory. Useful when authentication, preferences, or session state get into a bad state.
+icon: RotateCcw
+---
+
+Jean stores all of its local state in a single config directory.
+
+When something gets stuck — a stale auth loop, broken preferences, a corrupted UI state — the fastest fix is to quit Jean and delete that directory. The app rebuilds it on next launch.
+
+## What gets reset
+
+Wiping the config directory clears:
+- preferences and UI state
+- the project list and session metadata
+- recovery snapshots and pasted images
+- bundled CLI installs that Jean manages (Claude, Codex, OpenCode, GitHub)
+- webview cookies, cache, and local storage
+
+It does **not** touch:
+- your git repositories or worktrees on disk
+- backend credentials stored outside the config dir (for example, the macOS Keychain entry `Claude Code-credentials`)
+- anything installed system-wide, like a Homebrew `gh` binary
+
+<Callout type="warn" title="This is destructive">
+Deleting the config directory removes your project list and session history. If anything in there is worth keeping, copy `preferences.json` and `projects.json` somewhere safe before you continue.
+</Callout>
+
+## Where settings live
+
+Jean uses the Tauri app data directory for the identifier `com.jean.desktop`.
+
+| Platform | Path |
+|----------|------|
+| macOS    | `~/Library/Application Support/com.jean.desktop/` |
+| Linux    | `~/.local/share/com.jean.desktop/` |
+| Windows  | `%APPDATA%\com.jean.desktop\` |
+
+Dev and nightly builds use `com.jean.desktop.dev` instead of `com.jean.desktop`.
+
+## Before you reset
+
+1. Quit Jean fully — `Cmd+Q` on macOS, close from the tray on Windows and Linux. A running app will rewrite some files on exit.
+2. Optional: back up `preferences.json` and `projects.json` from the config directory.
+
+## Reset the config directory
+
+<Tabs items={["macOS", "Linux", "Windows (PowerShell)", "Windows (cmd)"]}>
+  <Tab value="macOS">
+
+```bash
+rm -rf ~/Library/Application\ Support/com.jean.desktop
+```
+
+For dev builds:
+
+```bash
+rm -rf ~/Library/Application\ Support/com.jean.desktop.dev
+```
+
+  </Tab>
+  <Tab value="Linux">
+
+```bash
+rm -rf ~/.local/share/com.jean.desktop
+```
+
+For dev builds:
+
+```bash
+rm -rf ~/.local/share/com.jean.desktop.dev
+```
+
+If you have set `$XDG_DATA_HOME`, replace `~/.local/share` with that path.
+
+  </Tab>
+  <Tab value="Windows (PowerShell)">
+
+```powershell
+Remove-Item -Recurse -Force "$env:APPDATA\com.jean.desktop"
+```
+
+For dev builds:
+
+```powershell
+Remove-Item -Recurse -Force "$env:APPDATA\com.jean.desktop.dev"
+```
+
+  </Tab>
+  <Tab value="Windows (cmd)">
+
+```cmd
+rmdir /s /q "%APPDATA%\com.jean.desktop"
+```
+
+For dev builds:
+
+```cmd
+rmdir /s /q "%APPDATA%\com.jean.desktop.dev"
+```
+
+  </Tab>
+</Tabs>
+
+## Reset just one piece
+
+If only one part of the state is broken, delete a single file instead of the whole directory:
+
+- `preferences.json` — app preferences, defaults, keybindings
+- `projects.json` — the project list
+- `ui-state.json` — window and panel state
+- `sessions/` — session history and metadata
+- `recovery/` — crash-recovery snapshots
+
+The path resolution is the same as above, just append the file or folder name.
+
+## Clear backend credentials
+
+Some backends store auth tokens outside Jean's config directory, so a config wipe alone may not stop a stale auth loop.
+
+**macOS Keychain (Claude CLI):**
+
+```bash
+security delete-generic-password -s "Claude Code-credentials"
+```
+
+**Other backends:** log out through the backend's own CLI before relaunching Jean.
+
+```bash
+codex logout
+# or, depending on the backend
+opencode logout
+```
+
+## Restart Jean
+
+Launch Jean again. The app starts in first-run state and rebuilds the config directory. Re-add your projects and re-authenticate any backends you cleared.
+
+If a problem comes back immediately after a reset, capture the steps and open an issue at [coollabsio/jean/issues](https://github.com/coollabsio/jean/issues) — that usually points to a bug rather than a stuck setting.
+
+## Next reads
+
+- [Settings and Customization](/manage/preferences-and-customization)
+- [Archive, Recovery, Updates](/manage/archive-recovery-and-updates)
