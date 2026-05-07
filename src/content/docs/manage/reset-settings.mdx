@@ -114,24 +114,6 @@ If only one part of the state is broken, delete a single file instead of the who
 
 The path resolution is the same as above, just append the file or folder name.
 
-## Clear backend credentials
-
-Some backends store auth tokens outside Jean's config directory, so a config wipe alone may not stop a stale auth loop.
-
-**macOS Keychain (Claude CLI):**
-
-```bash
-security delete-generic-password -s "Claude Code-credentials"
-```
-
-**Other backends:** log out through the backend's own CLI before relaunching Jean.
-
-```bash
-codex logout
-# or, depending on the backend
-opencode logout
-```
-
 ## Restart Jean
 
 Launch Jean again. The app starts in first-run state and rebuilds the config directory. Re-add your projects and re-authenticate any backends you cleared.
