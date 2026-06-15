@@ -12,6 +12,7 @@ The Preferences dialog is where that happens.
 
 The General pane covers the core app behavior, including:
 - CLI installation and authentication status
+- Jean-managed vs system `PATH` CLI sources, including WSL routing on Windows
 - default backend and model choices
 - terminal and editor defaults
 - git polling behavior
@@ -22,6 +23,10 @@ The General pane covers the core app behavior, including:
 - onboarding helpers and cleanup actions
 
 This is the best place to set the "every new project should feel like this" baseline.
+
+For supported CLIs, Jean can install and update its own managed binary, or use a CLI found on your system `PATH`. On Windows, Jean can route backend commands through WSL when that is the selected environment, so the CLI runs where your Linux repo and shell tools live.
+
+Codex, OpenCode, and PI also expose auto-steer toggles here. When enabled, plain follow-up prompts can be injected into an active turn instead of waiting for the run to fully finish.
 
 ## Appearance and keybindings
 
@@ -56,6 +61,10 @@ Jean lets you customize the prompt templates behind every built-in workflow (iss
 You can also set model, provider, backend, and reasoning defaults per workflow.
 
 See [Magic prompts](/manage/magic-prompts) for the full catalog and override options.
+
+## Project settings
+
+Project settings include repo-specific configuration such as default backend choices, MCP overrides, `jean.json`, and **Mr. Robot**. Mr. Robot is the beta automated issue-sweep system that can poll GitHub issues for a project, create one worktree per issue, draft a plan, and optionally yolo-approved plans during configured active hours.
 
 ## MCP servers and integrations
 

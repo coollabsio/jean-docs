@@ -82,12 +82,18 @@ Use the stricter mode until you trust the task, the repo, and the backend behavi
 
 ## Plan approvals
 
-When Plan mode returns a plan, Jean shows it in a dialog before any execution. The buttons let you:
-- **Approve** and run the plan in the current session
+When Plan mode returns a plan, Jean shows it in a dialog before any execution. The primary action is **YOLO**, with **Approve** available as the more conservative build-mode path.
+
+The approval menu can also run the plan with a different backend or model for that one approval. Use this when you want a careful planning model to draft the plan, then hand execution to a faster build or yolo model.
+
+Approval options include:
+- **YOLO** to approve and continue in trusted yolo mode
+- **Approve** to approve and continue in build mode
 - **Approve and clear context** to start fresh with only the plan as input
 - **Approve in new worktree** to execute the plan in an isolated branch and path
+- **Other model…** to pick a one-shot backend/model override before starting execution
 
-Those two extra options are useful when a plan grew out of exploration but deserves a clean execution environment.
+The clear-context and new-worktree options are useful when a plan grew out of exploration but deserves a clean execution environment.
 
 ## Session tabs
 

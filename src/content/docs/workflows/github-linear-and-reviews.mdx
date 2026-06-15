@@ -20,6 +20,12 @@ When you create a new session for a project, Jean can start from:
 
 For many of these, Jean can create the worktree and immediately launch the matching investigation flow.
 
+## Mr. Robot issue sweeps
+
+Mr. Robot is a beta project setting for automated GitHub issue sweeps. When enabled, Jean periodically checks open issues, applies included and excluded label filters, respects the project's active-hours window, and creates focused worktrees up to the configured run and active-worktree limits.
+
+Each sweep can ask the selected planning backend/model to investigate and draft a plan. If you enable optional yolo execution, Jean can also approve ready plans automatically with the configured yolo backend/model. Mr. Robot worktrees are grouped separately on the project canvas so they do not crowd the regular Issues view.
+
 ## Start from Linear
 
 If you add a Linear API key, Jean can list and search Linear issues for the project.

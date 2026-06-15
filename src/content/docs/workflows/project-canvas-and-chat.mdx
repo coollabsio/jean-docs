@@ -20,6 +20,7 @@ It gives you a rolled-up view of:
 - PR status
 - run script availability
 - quick open actions for editor, terminal, finder, and GitHub
+- filter tabs for Issues, PRs, Mr. Robot work, and pinned worktree labels
 
 This is the best place to answer "what is already in flight for this repo?"
 
@@ -47,14 +48,23 @@ This is where you:
 - open diffs
 - keep a terminal panel beside the conversation
 - search conversation history with `Cmd/Ctrl+F`
+- queue follow-up prompts while a backend is busy
 
-## Session labels and recap
+## Session and worktree labels
 
 Each session carries a label and a recap you can rely on when jumping back in:
-- **Labels** — pick from presets or assign a custom color to distinguish active sessions on the canvas
+- **Session labels** — pick from presets or assign a custom color to distinguish active sessions on the canvas
 - **Recap** — Jean can auto-generate a short digest when you return to a session, and you can trigger one manually with `R`. The Experimental pane lets you pick which model writes the recap.
 
+Worktrees can also have multiple labels. In the project canvas, use **Set labels** to add custom labels, change label colors, pin labels as project filter tabs, or delete a custom label after confirmation. Pinned labels stay available as filters even when only some matching worktrees are visible.
+
 Labels and recaps make the canvas usable even when many sessions pile up.
+
+## Running turns and queued prompts
+
+When a supported backend is already working, Jean keeps follow-up input attached to the same session instead of losing it. Codex, OpenCode, and PI can steer plain text follow-ups into a running turn when auto-steer is enabled; other follow-ups are queued and sent when the current run finishes.
+
+The chat also shows steered prompts as their own rows so you can tell what was added mid-run.
 
 ## Session debug panel
 
@@ -108,6 +118,7 @@ Common defaults include:
 - `Cmd+M` to open the magic menu
 - `Cmd+N` to create a worktree
 - `Cmd+T` to create a new session
+- `Cmd+Shift+F` to open the finished/unread sessions popover
 - `Shift+Tab` to cycle execution mode
 
 ## Next reads

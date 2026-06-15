@@ -6,19 +6,21 @@ icon: PlugZap
 
 Jean is not locked to a single agent backend.
 
-You can work with Claude CLI, Codex CLI, and OpenCode, then choose how much of that configuration is global, project-level, or session-specific.
+You can work with Claude CLI, Codex CLI, OpenCode, Cursor Agent, PI, and Command Code, then choose how much of that configuration is global, project-level, or session-specific.
 
 ## Backends
 
-Jean supports four backends:
+Jean supports six backends:
 - **Claude CLI**
 - **Codex CLI**
 - **OpenCode**
 - **Cursor Agent**
+- **PI** (Beta)
+- **Command Code** (Beta)
 
 You can set a global default backend and override it per project or per session.
 
-Each backend has different capabilities. Cursor Agent, for example, only supports `plan` and `yolo` execution modes.
+Each backend has different capabilities. Cursor Agent, for example, only supports `plan` and `yolo` execution modes. PI can steer follow-up prompts into a running turn, and Command Code runs through the `cmd` CLI with a CLI-default model option.
 
 ## Models and reasoning
 
@@ -27,9 +29,13 @@ Model selection is session-aware.
 Depending on the backend, Jean can also store and apply:
 - thinking level (Claude, Codex, OpenCode)
 - reasoning effort (Claude Opus adaptive)
+- PI provider model choices
+- Command Code model choices, including the CLI default
 - execution mode
 
 That lets you keep a lighter model for quick work and a heavier one for review, investigation, or tricky implementation.
+
+PI model options come from the active PI provider and are stored as `pi/*` model choices. Command Code model options are stored as `commandcode/*` choices; `commandcode/default` leaves model selection to the `cmd` CLI.
 
 ### Thinking levels
 

@@ -79,6 +79,16 @@ Edit a prompt when:
 
 Leave the default when the existing output is already close to what you want. The built-in templates are tuned for the current backends.
 
+### Release notes variables
+
+The Generate Release Notes prompt can use:
+- `{tag}` and `{previous_release_name}` for the selected prior release
+- `{commits}` for commit history since that release
+- `{pull_requests}` for matched merged PRs, detected related issues, and matched commits
+- `{related_pull_requests}` for exact PR/issue reference formats discovered from GitHub closing keywords
+
+Jean inspects PR titles, PR bodies, and PR commit messages for GitHub closing keywords such as `fixes #123`, then normalizes output references like `(#456, fixes #123)`.
+
 ## Reverting
 
 Every customized field can be reset to Jean's default.

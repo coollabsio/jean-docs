@@ -35,7 +35,9 @@ That makes cleanup reversible without making the active view noisy.
 ## Unread and orphaned work
 
 Jean also helps with cleanup around session state:
-- unread sessions can be surfaced as a queue
+- finished sessions you have not reopened appear in the unread popover
+- `Cmd/Ctrl+Shift+F` opens the finished/unread sessions popover
+- the popover can open a session, mark one item read, or mark everything read
 - orphaned session data can be cleaned up from maintenance commands
 
 This matters when repos, worktrees, and sessions do not all disappear in the same order.
@@ -61,7 +63,7 @@ In practice that means:
 - restart when the update is ready
 - AppImage artifact support for Linux updates
 
-Jean also tracks CLI versions separately from the app. When a supported backend CLI (Claude, Codex, OpenCode, Cursor) has an update, Jean shows a CLI update modal so you can refresh the backend without leaving the app.
+Jean also tracks CLI versions separately from the app. When a supported backend CLI (Claude, Codex, OpenCode, Cursor, PI, Command Code) has an update, Jean shows a CLI update modal so you can refresh the backend without leaving the app.
 
 ## Quit confirmation
 

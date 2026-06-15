@@ -23,7 +23,7 @@ Jean groups magic commands into a few main areas.
 
 - **Commit**
 - **Commit & Push**
-- **Revert Commit**
+- **Revert Commit** reverts the last local commit after confirmation
 - **Pull**
 - **Push**
 
@@ -47,7 +47,7 @@ Open or Create PR and Update PR both use the Generate PR Content prompt, so you 
 - **Investigate Pull Requests**
 - **Generate Release Notes**
 
-These flows are useful because Jean already knows how to load and format the surrounding context before the model starts reasoning.
+These flows are useful because Jean already knows how to load and format the surrounding context before the model starts reasoning. Generate Release Notes compares against a selected GitHub release, inspects matched merged PRs, and carries detected closing issue references into the generated notes.
 
 ## Branch work
 
