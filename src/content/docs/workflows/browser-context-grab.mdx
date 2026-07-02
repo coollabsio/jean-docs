@@ -1,0 +1,76 @@
+---
+title: Browser Context Grab
+description: Send source-aware DOM context from Jean's embedded browser directly into chat.
+icon: MousePointerClick
+---
+
+Jean's embedded browser can grab page elements and turn them into chat context.
+
+This is powered by React Grab, which highlights UI elements in the page and collects useful DOM and React source metadata for the selected element.
+
+## When to use it
+
+Use Browser Context Grab when:
+- you are looking at a page in Jean's embedded browser
+- you want the agent to understand a specific button, form, card, error state, or layout section
+- copying the whole page would be too noisy
+- you want source-aware context from a React app when it is available
+
+It is especially useful for UI debugging, frontend polish, and explaining a concrete screen state to a coding agent.
+
+## How to grab an element
+
+1. Open a page in Jean's browser panel.
+2. Click **Grab DOM element** in the browser toolbar.
+3. Hover the element you want to send.
+4. Use React Grab's **Send to Jean Chat** action, or copy the selected element.
+5. Jean attaches the captured context to the active chat draft as a text attachment.
+
+The attachment name is generated from the element, for example `dom-button-submit.txt`.
+
+## What gets sent to chat
+
+Jean sends a focused context bundle for the selected element:
+
+- page URL and title
+- element tag name
+- generated CSS selector
+- visible text
+- HTML for the selected element
+- React component name, when React Grab can resolve it
+- source file and line number, when available
+- React stack context, when available
+
+This gives the agent both the rendered DOM and the source hints it needs to find the right code faster.
+
+## Latest React Grab behavior in Jean
+
+Jean bundles the latest React Grab runtime locally and injects it into the embedded browser page only when you use the grab button.
+
+Current Jean behavior includes:
+- an expanded React Grab toolbar inside the page
+- Jean theme syncing for light and dark mode
+- toggle-style activation, so the grab overlay stays active while you pick an element
+- hover labels and selection feedback from React Grab
+- support for React Grab multi-element selection feedback
+- a Jean-specific **Send to Jean Chat** action in the context menu and toolbar
+- a `J` shortcut for the Jean action while React Grab is active
+- automatic chat attachment creation after a successful grab/copy
+
+Jean keeps the integration focused on sending context to chat. It disables React Grab actions for commenting, editing page styles, or opening source files directly from the embedded page.
+
+## Privacy and safety
+
+React Grab runs inside the embedded browser page and Jean stores the captured context as a local chat attachment.
+
+Keep in mind:
+- grabbed text and HTML are treated as untrusted page content
+- only grab sensitive pages when you are comfortable sending that context to the selected backend
+- Jean does not load React Grab from a CDN at runtime
+- Jean disables React Grab telemetry/version checks in the embedded browser integration
+
+## Next reads
+
+- [Project canvas and chat](/workflows/project-canvas-and-chat)
+- [Local-first and security](/about/local-first-and-security)
+- [Backends, models, and MCP](/core-concepts/backends-models-and-mcp)

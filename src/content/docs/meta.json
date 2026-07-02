@@ -15,6 +15,7 @@
     "core-concepts/project-linking",
     "---Workflows---",
     "workflows/project-canvas-and-chat",
+    "workflows/browser-context-grab",
     "workflows/magic-commands",
     "workflows/github-linear-and-reviews",
     "---Manage Jean---",
