@@ -1,96 +1,137 @@
 ---
 title: Web Access and Headless
-description: Expose Jean over its built-in HTTP server or run it without the desktop window.
+description: Every Jean instance can expose the full UI over HTTP/WebSocket — desktop or headless server — with token auth and Tailscale-friendly binds.
 icon: Globe
 ---
 
-Jean includes an embedded HTTP server for browser access.
+Every Jean instance can run **Web Access**: an embedded HTTP + WebSocket server that serves the same UI in a browser.
 
-This is useful when you want to keep the app running on another machine, open it from a browser, or use the headless mode as a long-lived workspace host.
+That applies to both:
+
+| Mode | How you get Web Access |
+| --- | --- |
+| **Native desktop** (macOS / Windows / Linux) | Preferences → **Web Access** — enable the HTTP server, set port/bind address, copy the token URL |
+| **Headless server** (`jean-server`) | Always on — the process *is* the Web Access endpoint |
+
+Use it to open Jean from another machine on your LAN, a phone or tablet browser, or a remote host. Token authentication is on by default; keep it enabled for any non-localhost bind.
 
 ## What web access provides
 
-The HTTP server serves the frontend and keeps the app state connected over WebSocket.
+The HTTP server serves the frontend and keeps app state connected over WebSocket.
 
 In practice, that means you can:
-- open Jean in a browser
-- keep using the same projects, worktrees, and sessions
+- open Jean in a browser on the same machine or across the network
+- keep using the same projects, worktrees, and sessions as the host instance
 - copy a tokenized URL for quick access
+- connect the **native desktop app** to a remote Jean instance (see [Connect from the native app](#connect-from-the-native-app))
+
+## Desktop app (native)
+
+1. Open **Preferences → Web Access**
+2. Enable **HTTP server** (optionally turn on **Auto-start**)
+3. Set **Port** (default `3456`) and **Bind address**
+4. Open the shown URL (includes `?token=...`) in a browser, or share it with devices that can reach that host
+
+Jean can list likely bind host options for the machine so you do not have to guess the address manually.
+
+### What you can configure
+
+From Preferences → Web Access:
+- whether the server is running
+- port
+- bind host
+- auto-start on launch
+- whether a token is required
+- token regeneration
 
 ## Default behavior
 
-The safe baseline is:
+The safe baseline on desktop is:
 - HTTP server disabled
 - localhost-only binding
 - token required
 
 That is the right place to start unless you have a clear reason to expose Jean more broadly.
 
-## What you can configure
+## Network access (recommended: Tailscale)
 
-From Preferences, you can control:
-- whether the server is running
-- port
-- bind host
-- auto-start behavior
-- whether a token is required
-- token regeneration
+Web Access binds a normal TCP port (default **3456**). For access beyond the local machine, prefer a private mesh VPN rather than exposing the port to the public internet:
 
-Jean can also list likely bind host options for the machine so you do not have to guess the address manually.
+- **[Tailscale](https://tailscale.com/)** (recommended) — bind Jean to the Tailscale IP (or use the installer's `--host tailscale` preset) and open the URL from any device on your tailnet
+- Other options: WireGuard, ZeroTier, SSH tunnel, or a reverse proxy with TLS in front of `127.0.0.1`
 
-## Headless mode
+Keep token auth enabled, use a long random token (`openssl rand -base64 32`), and avoid binding `0.0.0.0` on untrusted networks unless you also terminate TLS and restrict who can reach the port.
 
-To run Jean without the desktop window:
+## Headless server (`jean-server`)
+
+`jean-server` is a standalone Linux binary: Tokio/Axum only — **no Tauri, WebView, GTK, or display server**. Linux **amd64** and **arm64** (glibc + OpenSSL 3; Ubuntu 22.04+ / Debian 12+ recommended).
 
 ```bash
-jean --headless --host 127.0.0.1 --port 3456
+jean-server --host 127.0.0.1 --port 3456
+# or with an explicit token:
+jean-server --host 127.0.0.1 --port 3456 --token "$JEAN_TOKEN"
 ```
 
-Swap the host if you need network access, but keep token protection enabled unless you have a stronger access layer in front of it.
-
-When headless mode starts, Jean prints the browser URL. If token auth is enabled, the URL includes the token as a query parameter.
+When it starts, Jean prints the browser URL. If token auth is enabled, the URL includes the token as a query parameter.
 
 ### Options and environment variables
 
 | CLI option | Environment variable | Default |
 | --- | --- | --- |
-| `--headless` | `JEAN_HEADLESS=1` | off |
-| `--host <addr>` | `JEAN_HOST` | saved preference, usually `127.0.0.1` |
+| `--host <addr>` | `JEAN_HOST` | `127.0.0.1` (or installer choice) |
 | `--port <port>` | `JEAN_PORT` | `3456` |
 | `--token <token>` | `JEAN_TOKEN` | saved or generated token |
 | `--no-token` | `JEAN_NO_TOKEN=1` | off |
 | `--allow-unsafe-no-token` | `JEAN_ALLOW_UNSAFE_NO_TOKEN=1` | off |
-| n/a | `JEAN_ALLOWED_ORIGINS` | same-origin only |
+| n/a | `JEAN_ALLOWED_ORIGINS` | same-origin + native Jean clients |
 
-Jean refuses `--no-token` with `--host 0.0.0.0` or `--host ::` unless you also pass `--allow-unsafe-no-token`. Prefer leaving token auth on.
+`--host` accepts a concrete address or presets such as `localhost`, `all` / `0.0.0.0`, `lan`, and `tailscale` (auto-detect Tailscale IPv4). Jean refuses `--no-token` with a public bind unless you also pass `--allow-unsafe-no-token`. Prefer leaving token auth on.
 
-## `jean-server`
+### Install (release binary + systemd)
 
-Packaged server deployments can use the `jean-server` entrypoint. It is the same Jean backend, started with headless mode enabled by default:
-
-```bash
-jean-server --host 127.0.0.1 --port 3456
-```
-
-On Linux, Jean still needs a display backend because the Tauri/GTK runtime initializes even without a visible window. If you run the raw binary on a server without `DISPLAY`, start it with `xvfb-run` or provide an X/Wayland display:
+Interactive install (prompts for bind interface + port when a TTY is available):
 
 ```bash
-xvfb-run -a jean-server --host 0.0.0.0 --port 3456 --token "$JEAN_TOKEN"
+curl -fsSL https://raw.githubusercontent.com/coollabsio/jean/main/scripts/install-jean-server.sh | sudo bash
 ```
+
+Non-interactive (defaults to `127.0.0.1:3456`, or pass `--host` / `--port`):
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/coollabsio/jean/main/scripts/install-jean-server.sh | sudo bash -s -- -y
+```
+
+Common options:
+
+```bash
+# Public bind with an explicit token
+sudo ./scripts/install-jean-server.sh \
+  --host 0.0.0.0 \
+  --port 3456 \
+  --token "$(openssl rand -base64 32)" \
+  -y
+
+# Tailscale-only bind (auto-detect Tailscale IPv4) — recommended for remote use
+sudo ./scripts/install-jean-server.sh --host tailscale -y
+
+# Current user only (user systemd unit)
+./scripts/install-jean-server.sh --user-install --host 127.0.0.1 -y
+```
+
+The installer downloads the latest release, installs the binary, writes an env file (host/port/token), and registers a systemd service. Re-run to upgrade; existing tokens are preserved unless you pass `--token`.
 
 ## Docker image
 
-Jean publishes a server image from the server release workflow:
+Jean publishes a server image:
 
 ```text
 ghcr.io/coollabsio/jean-server:<tag>
 ```
 
-The container starts `Xvfb` automatically before launching `jean-server`. Bind to `0.0.0.0` inside the container, keep token auth enabled, and mount Jean's app-data directory so projects, preferences, and sessions persist.
+Bind to `0.0.0.0` inside the container, keep token auth enabled, and mount Jean's app-data directory so projects, preferences, and sessions persist.
 
 ```bash
 docker run --rm \
-  -e JEAN_HEADLESS=1 \
   -e JEAN_HOST=0.0.0.0 \
   -e JEAN_PORT=3456 \
   -e JEAN_TOKEN=change-me-long-random-token \
@@ -115,14 +156,6 @@ curl -H "Authorization: Bearer $JEAN_TOKEN" http://127.0.0.1:3456/api/auth
 curl "http://127.0.0.1:3456/api/init?token=$JEAN_TOKEN"
 ```
 
-## A simple remote setup
-
-1. Start Jean in headless mode, with `jean-server`, or with the Docker image.
-2. Keep it on a loopback bind if you only need local browser access.
-3. If you need remote access, bind intentionally and keep the token on.
-4. Put TLS and access control in front of Jean for internet-facing deployments.
-5. Copy the generated URL with the token appended when needed.
-
 ## Reverse proxy and Tailscale
 
 Reverse proxies do not need to rewrite paths. The browser UI uses `/api/init`, `/api/auth`, and `/ws` from the same origin.
@@ -139,15 +172,45 @@ jean.example.com {
 For Tailscale-only access, bind directly to your Tailscale IP and keep token auth enabled:
 
 ```bash
-jean --headless --host 100.x.y.z --port 3456 --token "$JEAN_TOKEN"
+jean-server --host 100.x.y.z --port 3456 --token "$JEAN_TOKEN"
+# or:
+sudo ./scripts/install-jean-server.sh --host tailscale -y
 ```
+
+## Connect from the native app
+
+In the desktop app, click the server icon in the title bar, choose **Add remote**, and enter either the full Web Access URL (including `?token=...`) or the server URL and token separately.
+
+Selecting the remote switches the entire Jean backend while keeping the desktop app's shell (menus, native controls). Commands and events for the selected instance travel over HTTP/WebSocket. Select **Local** from the same dialog (or the command palette) to return to the desktop app's local backend.
+
+Native Jean client origins are allowed automatically. HTTP and HTTPS server URLs are both supported; keep token authentication enabled on remote servers.
+
+## Server updates (bare-metal Linux)
+
+`jean-server` can install a newer binary when you choose to from Web Access or a connected native client. Nothing is installed in the background — apply only runs after you confirm **Update & restart**.
+
+| Piece | Behavior |
+| --- | --- |
+| Manifest | `server-latest.json` on the latest GitHub release |
+| Check | Web Access / remote client shows an update offer if newer |
+| Apply | User confirms → download, SHA-256 verify, restart service or re-exec |
+| Containers | Not supported — update the Docker/GHCR image instead |
+| Active sessions | Apply is refused while chat sessions are running |
+
+## Security recommendations
+
+- Prefer `127.0.0.1` behind Caddy/Nginx, SSH tunnel, or **Tailscale**
+- Keep token auth enabled for every non-localhost bind
+- Use a long random token, for example `openssl rand -base64 32`
+- Set `JEAN_ALLOWED_ORIGINS=https://jean.example.com` only when you need additional cross-origin browser access; native Jean client origins are allowed by default
 
 ## Use this when
 
 Web access and headless mode make sense when:
-- Jean runs on a dedicated development machine
+- Jean runs on a dedicated development machine or server
 - you want browser access to long-running work
-- you need to check session state without opening the desktop app
+- you need to check session state without opening the desktop window on that host
+- you want one powerful host and lighter clients (browser or native remote)
 
 ## Next reads
 

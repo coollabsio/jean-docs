@@ -40,6 +40,8 @@ Jean can work with:
 - Cursor Agent authentication
 - PI CLI authentication
 - Command Code CLI authentication
+- Grok CLI authentication
+- Kimi Code CLI authentication
 - GitHub CLI authentication
 - optional custom Claude CLI provider profiles
 
@@ -54,17 +56,18 @@ A few defaults lean conservative:
 - new MCP server discovery respects servers you explicitly disabled
 
 <Callout type="warn" title="About web access">
-If you bind Jean to `0.0.0.0` or another non-loopback host, treat it like any other developer tool exposed on your network. Keep token protection on and put a real access policy in front of it if the network is shared.
+If you bind Jean to `0.0.0.0` or another non-loopback host, treat it like any other developer tool exposed on your network. Keep token protection on. Prefer [Tailscale](https://tailscale.com/) (or WireGuard / SSH tunnel / reverse proxy with TLS) instead of a raw public port.
 </Callout>
 
 ## What the browser mode does
 
-Jean's web access mode serves the frontend over an embedded HTTP server and keeps state in sync over WebSocket.
+Every Jean instance — desktop or `jean-server` — can serve the frontend over an embedded HTTP server and keep state in sync over WebSocket.
 
 That is useful for:
 - running Jean headless on another machine
 - opening the same workspace from a browser
 - checking on long-running work without staying in the desktop app
+- connecting the native desktop app to a remote Jean instance (title bar server icon → **Add remote**)
 
 ## Recovery and cleanup
 

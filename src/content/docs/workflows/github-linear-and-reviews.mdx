@@ -54,11 +54,15 @@ Because the workspace is already branch-aware, review flows stay close to the ac
 Jean can also start work from:
 - Dependabot alerts
 - repository security advisories
+- **Sentry** issues (when Sentry is configured for the project)
 
 Those flows are useful when you need to answer questions like:
 - is the vulnerable code path actually used here?
 - what should be upgraded?
 - what compatibility work is needed?
+- what stack trace or release caused this production error?
+
+Sentry investigation pulls issue context into a session the same way GitHub and Linear do, so the agent can start from the error rather than a blank prompt.
 
 ## A practical pattern
 

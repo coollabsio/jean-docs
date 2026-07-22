@@ -6,12 +6,12 @@ icon: Download
 
 Jean runs as a native desktop app and works with the CLI tools you already use.
 
-You can use Claude CLI, Codex CLI, OpenCode, Cursor Agent, PI, Command Code, or a mix of them. Git is required. GitHub CLI and a Linear API key are optional, but they unlock more of the workflow.
+You can use Claude CLI, Codex CLI, OpenCode, Cursor Agent, PI, Command Code, Grok, Kimi Code, or a mix of them. Git is required. GitHub CLI and a Linear API key are optional, but they unlock more of the workflow.
 
 ## What you need
 
 - Git
-- At least one backend: Claude CLI, Codex CLI, OpenCode, Cursor Agent, PI, or Command Code
+- At least one backend: Claude CLI, Codex CLI, OpenCode, Cursor Agent, PI, Command Code, Grok, or Kimi Code
 - A Jean install from Homebrew or the [coollabsio/jean releases](https://github.com/coollabsio/jean/releases)
 - Optional: GitHub CLI for issues, PRs, workflows, and security context
 - Optional: Linear personal API key for Linear issue flows
@@ -40,8 +40,8 @@ If none are available, the welcome screen guides you through setup before you ca
 
 In the setup flow you can:
 - verify CLI installation status
-- authenticate Claude CLI, Codex CLI, GitHub CLI, OpenCode, Cursor Agent, PI, and Command Code
-- choose where each CLI comes from when path-based installs are available
+- authenticate Claude CLI, Codex CLI, GitHub CLI, OpenCode, Cursor Agent, PI, Command Code, Grok, and Kimi Code
+- choose where each CLI comes from when path-based or Jean-managed installs are available
 - set your default backend, model, and other defaults
 - decide whether you want Jean to open terminals and editors with your preferred apps
 
@@ -56,7 +56,7 @@ If you are new to Jean, start with one backend you already trust and add the oth
 - **Custom Claude CLI provider profiles** let you route Claude CLI through alternate endpoints while keeping Jean's workflow intact.
 
 <Callout title="Web access comes later">
-Headless mode and browser access belong to the runtime side of Jean, not the install step. See the web access guide once the desktop setup is done.
+Every Jean instance can expose Web Access (desktop Preferences or the `jean-server` binary). That is a runtime choice, not an install step. See the web access guide once setup is done — Tailscale or a similar private network is recommended for remote use.
 </Callout>
 
 ## Next reads

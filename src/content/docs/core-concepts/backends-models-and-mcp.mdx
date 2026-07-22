@@ -6,21 +6,28 @@ icon: PlugZap
 
 Jean is not locked to a single agent backend.
 
-You can work with Claude CLI, Codex CLI, OpenCode, Cursor Agent, PI, and Command Code, then choose how much of that configuration is global, project-level, or session-specific.
+You can work with Claude CLI, Codex CLI, OpenCode, Cursor Agent, PI, Command Code, Grok, and Kimi Code, then choose how much of that configuration is global, project-level, or session-specific.
 
 ## Backends
 
-Jean supports six backends:
+Jean supports eight backends:
 - **Claude CLI**
 - **Codex CLI**
 - **OpenCode**
 - **Cursor Agent**
 - **PI** (Beta)
 - **Command Code** (Beta)
+- **Grok** (xAI headless / ACP)
+- **Kimi Code** (Beta)
 
 You can set a global default backend and override it per project or per session.
 
-Each backend has different capabilities. Cursor Agent, for example, only supports `plan` and `yolo` execution modes. PI can steer follow-up prompts into a running turn, and Command Code runs through the `cmd` CLI with a CLI-default model option.
+Each backend has different capabilities:
+- Cursor Agent only supports `plan` and `yolo` execution modes
+- PI and Grok can steer follow-up prompts into a running turn
+- Command Code runs through the `cmd` CLI with a CLI-default model option
+- Grok defaults to managed CLI install and catalog models such as `grok/grok-4.5`
+- Kimi Code uses ACP-style sessions with `kimi/*` model choices
 
 ## Models and reasoning
 
@@ -28,14 +35,16 @@ Model selection is session-aware.
 
 Depending on the backend, Jean can also store and apply:
 - thinking level (Claude, Codex, OpenCode)
-- reasoning effort (Claude Opus adaptive)
+- reasoning effort (Claude Opus adaptive, Grok)
 - PI provider model choices
 - Command Code model choices, including the CLI default
+- Grok model choices (`grok/*`)
+- Kimi Code model choices (`kimi/*`), including CLI default
 - execution mode
 
 That lets you keep a lighter model for quick work and a heavier one for review, investigation, or tricky implementation.
 
-PI model options come from the active PI provider and are stored as `pi/*` model choices. Command Code model options are stored as `commandcode/*` choices; `commandcode/default` leaves model selection to the `cmd` CLI.
+PI model options come from the active PI provider and are stored as `pi/*` model choices. Command Code model options are stored as `commandcode/*` choices; `commandcode/default` leaves model selection to the `cmd` CLI. Grok and Kimi follow the same `backend/model` catalog pattern in the model picker.
 
 ### Thinking levels
 
