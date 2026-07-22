@@ -49,21 +49,21 @@ PI model options come from the active PI provider and are stored as `pi/*` model
 ### Thinking levels
 
 For Claude CLI, Jean exposes four levels with increasing token budgets:
-- **Off** — thinking disabled
-- **Think** — 4K token budget
-- **Megathink** — 10K token budget
-- **Ultrathink** — 32K token budget (default)
+- **Off** - thinking disabled
+- **Think** - 4K token budget
+- **Megathink** - 10K token budget
+- **Ultrathink** - 32K token budget (default)
 
 Higher levels let the model reason more before answering, at the cost of more tokens and latency. Off is appropriate for short generation tasks where reasoning is not useful.
 
 ### Effort levels (Opus adaptive thinking)
 
 Latest Claude Opus models on CLI 2.1.32+ replace the thinking-level dial with an adaptive effort dial:
-- **Low** — minimal thinking, skipped for simple tasks
-- **Medium** — moderate thinking
-- **High** — deep reasoning (default), almost always thinks
-- **xHigh** — extra-high effort (recommended default for coding and agentic work on Opus 4.7)
-- **Max** — no constraints on thinking depth
+- **Low** - minimal thinking, skipped for simple tasks
+- **Medium** - moderate thinking
+- **High** - deep reasoning (default), almost always thinks
+- **xHigh** - extra-high effort (recommended default for coding and agentic work on Opus 4.7)
+- **Max** - no constraints on thinking depth
 
 Jean picks the correct control for the selected model automatically.
 

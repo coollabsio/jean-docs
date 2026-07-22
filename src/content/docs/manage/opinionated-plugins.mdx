@@ -10,14 +10,14 @@ These are not built into Jean. They are external plugins Jean knows how to insta
 
 ## What is included
 
-**RTK** — a system-wide CLI proxy that filters and compresses command outputs before they reach the agent. Cuts token consumption 60-90% on common dev commands like git, npm, docker, cargo. Runs transparently after install; every backend sees the smaller output.
+**RTK** - a system-wide CLI proxy that filters and compresses command outputs before they reach the agent. Cuts token consumption 60-90% on common dev commands like git, npm, docker, cargo. Runs transparently after install; every backend sees the smaller output.
 
 - Applies to: Claude, Codex, OpenCode, Cursor, every CLI backend
 - Scope: system-wide (shell-level)
 - Verify: `rtk status`
 - Configure: `rtk config`
 
-**Caveman** — a Claude Code skill that makes the agent answer in a terse, fragment-heavy style. Cuts output tokens roughly 65-75% while keeping technical accuracy.
+**Caveman** - a Claude Code skill that makes the agent answer in a terse, fragment-heavy style. Cuts output tokens roughly 65-75% while keeping technical accuracy.
 
 - Applies to: Claude only
 - Scope: Claude CLI plugin

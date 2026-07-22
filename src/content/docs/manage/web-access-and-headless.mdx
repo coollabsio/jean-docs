@@ -1,6 +1,6 @@
 ---
 title: Web Access and Headless
-description: Every Jean instance can expose the full UI over HTTP/WebSocket — desktop or headless server — with token auth and Tailscale-friendly binds.
+description: Every Jean instance can expose the full UI over HTTP/WebSocket - desktop or headless server - with token auth and Tailscale-friendly binds.
 icon: Globe
 ---
 
@@ -10,8 +10,8 @@ That applies to both:
 
 | Mode | How you get Web Access |
 | --- | --- |
-| **Native desktop** (macOS / Windows / Linux) | Preferences → **Web Access** — enable the HTTP server, set port/bind address, copy the token URL |
-| **Headless server** (`jean-server`) | Always on — the process *is* the Web Access endpoint |
+| **Native desktop** (macOS / Windows / Linux) | Preferences → **Web Access** - enable the HTTP server, set port/bind address, copy the token URL |
+| **Headless server** (`jean-server`) | Always on - the process *is* the Web Access endpoint |
 
 Use it to open Jean from another machine on your LAN, a phone or tablet browser, or a remote host. Token authentication is on by default; keep it enabled for any non-localhost bind.
 
@@ -57,14 +57,14 @@ That is the right place to start unless you have a clear reason to expose Jean m
 
 Web Access binds a normal TCP port (default **3456**). For access beyond the local machine, prefer a private mesh VPN rather than exposing the port to the public internet:
 
-- **[Tailscale](https://tailscale.com/)** (recommended) — bind Jean to the Tailscale IP (or use the installer's `--host tailscale` preset) and open the URL from any device on your tailnet
+- **[Tailscale](https://tailscale.com/)** (recommended) - bind Jean to the Tailscale IP (or use the installer's `--host tailscale` preset) and open the URL from any device on your tailnet
 - Other options: WireGuard, ZeroTier, SSH tunnel, or a reverse proxy with TLS in front of `127.0.0.1`
 
 Keep token auth enabled, use a long random token (`openssl rand -base64 32`), and avoid binding `0.0.0.0` on untrusted networks unless you also terminate TLS and restrict who can reach the port.
 
 ## Headless server (`jean-server`)
 
-`jean-server` is a standalone Linux binary: Tokio/Axum only — **no Tauri, WebView, GTK, or display server**. Linux **amd64** and **arm64** (glibc + OpenSSL 3; Ubuntu 22.04+ / Debian 12+ recommended).
+`jean-server` is a standalone Linux binary: Tokio/Axum only - **no Tauri, WebView, GTK, or display server**. Linux **amd64** and **arm64** (glibc + OpenSSL 3; Ubuntu 22.04+ / Debian 12+ recommended).
 
 ```bash
 jean-server --host 127.0.0.1 --port 3456
@@ -111,7 +111,7 @@ sudo ./scripts/install-jean-server.sh \
   --token "$(openssl rand -base64 32)" \
   -y
 
-# Tailscale-only bind (auto-detect Tailscale IPv4) — recommended for remote use
+# Tailscale-only bind (auto-detect Tailscale IPv4) - recommended for remote use
 sudo ./scripts/install-jean-server.sh --host tailscale -y
 
 # Current user only (user systemd unit)
@@ -146,8 +146,8 @@ Keep the host-side port bind on `127.0.0.1` when you are putting Caddy, Nginx, T
 
 Use these endpoints for process checks and deployment probes:
 
-- `GET /healthz` — process is alive
-- `GET /readyz` — HTTP server and WebSocket broadcaster are initialized
+- `GET /healthz` - process is alive
+- `GET /readyz` - HTTP server and WebSocket broadcaster are initialized
 
 Authenticated API endpoints accept either `?token=...` or an HTTP bearer token:
 
@@ -187,14 +187,14 @@ Native Jean client origins are allowed automatically. HTTP and HTTPS server URLs
 
 ## Server updates (bare-metal Linux)
 
-`jean-server` can install a newer binary when you choose to from Web Access or a connected native client. Nothing is installed in the background — apply only runs after you confirm **Update & restart**.
+`jean-server` can install a newer binary when you choose to from Web Access or a connected native client. Nothing is installed in the background - apply only runs after you confirm **Update & restart**.
 
 | Piece | Behavior |
 | --- | --- |
 | Manifest | `server-latest.json` on the latest GitHub release |
 | Check | Web Access / remote client shows an update offer if newer |
 | Apply | User confirms → download, SHA-256 verify, restart service or re-exec |
-| Containers | Not supported — update the Docker/GHCR image instead |
+| Containers | Not supported - update the Docker/GHCR image instead |
 | Active sessions | Apply is refused while chat sessions are running |
 
 ## Security recommendations

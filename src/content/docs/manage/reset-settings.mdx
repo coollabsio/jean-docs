@@ -6,7 +6,7 @@ icon: RotateCcw
 
 Jean stores all of its local state in a single config directory.
 
-When something gets stuck — a stale auth loop, broken preferences, a corrupted UI state — the fastest fix is to quit Jean and delete that directory. The app rebuilds it on next launch.
+When something gets stuck - a stale auth loop, broken preferences, a corrupted UI state - the fastest fix is to quit Jean and delete that directory. The app rebuilds it on next launch.
 
 ## What gets reset
 
@@ -40,7 +40,7 @@ Dev and nightly builds use `com.jean.desktop.dev` instead of `com.jean.desktop`.
 
 ## Before you reset
 
-1. Quit Jean fully — `Cmd+Q` on macOS, close from the tray on Windows and Linux. A running app will rewrite some files on exit.
+1. Quit Jean fully - `Cmd+Q` on macOS, close from the tray on Windows and Linux. A running app will rewrite some files on exit.
 2. Optional: back up `preferences.json` and `projects.json` from the config directory.
 
 ## Reset the config directory
@@ -106,11 +106,11 @@ rmdir /s /q "%APPDATA%\com.jean.desktop.dev"
 
 If only one part of the state is broken, delete a single file instead of the whole directory:
 
-- `preferences.json` — app preferences, defaults, keybindings
-- `projects.json` — the project list
-- `ui-state.json` — window and panel state
-- `sessions/` — session history and metadata
-- `recovery/` — crash-recovery snapshots
+- `preferences.json` - app preferences, defaults, keybindings
+- `projects.json` - the project list
+- `ui-state.json` - window and panel state
+- `sessions/` - session history and metadata
+- `recovery/` - crash-recovery snapshots
 
 The path resolution is the same as above, just append the file or folder name.
 
@@ -118,7 +118,7 @@ The path resolution is the same as above, just append the file or folder name.
 
 Launch Jean again. The app starts in first-run state and rebuilds the config directory. Re-add your projects and re-authenticate any backends you cleared.
 
-If a problem comes back immediately after a reset, capture the steps and open an issue at [coollabsio/jean/issues](https://github.com/coollabsio/jean/issues) — that usually points to a bug rather than a stuck setting.
+If a problem comes back immediately after a reset, capture the steps and open an issue at [coollabsio/jean/issues](https://github.com/coollabsio/jean/issues) - that usually points to a bug rather than a stuck setting.
 
 ## Next reads
 
